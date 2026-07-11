@@ -12,24 +12,25 @@ import { Footer } from "@/components/portfolio/Footer";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Vivek Vishal — Finance Professional & Aspiring Civil Servant" },
+      { title: "Vivek Vishal | MBA Finance | Assistant Manager at DSP Asset Managers" },
       {
         name: "description",
         content:
-          "Vivek Vishal — MBA (Finance), Assistant Manager at DSP Asset Managers. Building expertise in finance today while preparing to create impact through public service tomorrow.",
+          "Personal website of Vivek Vishal featuring professional experience, certifications, projects, and contact information.",
       },
-      { property: "og:title", content: "Vivek Vishal — Finance Professional" },
+      { property: "og:title", content: "Vivek Vishal | MBA Finance | Assistant Manager at DSP Asset Managers" },
       {
         property: "og:description",
         content:
-          "Finance today, public service tomorrow. MBA (Finance), Assistant Manager at DSP Asset Managers.",
+          "Personal website of Vivek Vishal featuring professional experience, certifications, projects, and contact information.",
       },
       { property: "og:type", content: "website" },
       { property: "og:url", content: "/" },
-      { name: "twitter:title", content: "Vivek Vishal" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Vivek Vishal | MBA Finance | DSP Asset Managers" },
       {
         name: "twitter:description",
-        content: "MBA (Finance) · Assistant Manager, DSP Asset Managers · Aspiring Civil Servant.",
+        content: "MBA (Finance) · Assistant Manager, DSP Asset Managers · Investment & Capital Markets Professional.",
       },
     ],
     links: [{ rel: "canonical", href: "/" }],
@@ -44,13 +45,14 @@ export const Route = createFileRoute("/")({
           worksFor: { "@type": "Organization", name: "DSP Asset Managers" },
           address: { "@type": "PostalAddress", addressLocality: "Nagpur", addressCountry: "IN" },
           description:
-            "MBA (Finance), Assistant Manager at DSP Asset Managers, aspiring civil servant.",
+            "MBA (Finance), Assistant Manager at DSP Asset Managers — investment and capital markets professional.",
           knowsAbout: [
             "Finance",
+            "Capital Markets",
             "Mutual Funds",
             "Investment Products",
             "Financial Analysis",
-            "Public Policy",
+            "Relationship Management",
           ],
         }),
       },

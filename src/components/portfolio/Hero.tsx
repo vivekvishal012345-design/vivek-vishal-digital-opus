@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { ArrowUpRight, FileDown, Linkedin, Mail, MapPin } from "lucide-react";
+import { ArrowUpRight, FileDown, Linkedin, Mail, MapPin, User } from "lucide-react";
 
 export function Hero() {
   return (
@@ -49,7 +49,7 @@ export function Hero() {
               transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
               className="mt-5 text-sm font-medium text-muted-foreground sm:text-base"
             >
-              MBA (Finance) · Assistant Manager, DSP Asset Managers · Finance Professional · Aspiring Civil Servant
+              MBA (Finance) · Assistant Manager at DSP Asset Managers · Investment & Capital Markets Professional
             </motion.p>
 
             <motion.p
@@ -58,7 +58,7 @@ export function Hero() {
               transition={{ duration: 0.7, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
               className="mt-8 max-w-xl text-lg leading-relaxed text-foreground/85 sm:text-xl"
             >
-              Building expertise in finance today while preparing to create impact through public service tomorrow.
+              Helping investors make informed financial decisions while continuously building expertise in capital markets, investment products, and long-term wealth creation.
             </motion.p>
 
             <motion.div
@@ -68,14 +68,15 @@ export function Hero() {
               className="mt-10 flex flex-wrap items-center gap-3"
             >
               <a
-                href="#resume"
+                href="/resume.pdf"
+                download
                 className="group inline-flex items-center gap-2 rounded-full bg-[color:var(--royal)] px-5 py-2.5 text-sm font-medium text-white transition-all hover:brightness-110"
               >
                 <FileDown className="h-4 w-4" />
-                View Resume
+                Download Resume
               </a>
               <a
-                href="https://www.linkedin.com/"
+                href="https://www.linkedin.com/in/vivekvishal"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 rounded-full border border-border bg-[color:var(--surface)] px-5 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-accent"
@@ -112,7 +113,17 @@ export function Hero() {
             className="relative mx-auto aspect-[4/5] w-full max-w-sm"
           >
             <div className="absolute -inset-4 rounded-3xl bg-gradient-to-br from-[color:var(--royal)]/30 via-transparent to-transparent blur-2xl" />
-            <div className="relative h-full w-full overflow-hidden rounded-3xl border border-border bg-[color:var(--surface)]">
+            <div className="relative h-full w-full overflow-hidden rounded-3xl border border-border bg-[color:var(--surface)] shadow-2xl shadow-[color:var(--royal)]/10">
+              <img
+                src="/profile.jpg"
+                alt="Portrait of Vivek Vishal"
+                loading="eager"
+                decoding="async"
+                className="absolute inset-0 h-full w-full object-cover"
+                onError={(e) => {
+                  (e.currentTarget as HTMLImageElement).style.display = "none";
+                }}
+              />
               <div
                 className="absolute inset-0"
                 style={{
@@ -122,16 +133,16 @@ export function Hero() {
               />
               <div className="absolute inset-0 grid place-items-center">
                 <div className="flex flex-col items-center gap-4 text-center">
-                  <div className="grid h-32 w-32 place-items-center rounded-full border border-border bg-[color:var(--card)] font-display text-5xl text-foreground/70">
-                    VV
+                  <div className="grid h-32 w-32 place-items-center rounded-full border border-border bg-[color:var(--card)] text-foreground/70">
+                    <User className="h-14 w-14" strokeWidth={1.25} />
                   </div>
                   <p className="max-w-[220px] text-xs text-muted-foreground">
-                    Add a professional portrait here — square or 4:5 recommended.
+                    Add a professional portrait at <code>/public/profile.jpg</code>.
                   </p>
                 </div>
               </div>
               <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between rounded-xl border border-border bg-[color:var(--card)]/80 px-3 py-2 text-xs text-muted-foreground backdrop-blur">
-                <span>Finance · Markets · Public Service</span>
+                <span>Finance · Markets · Investments</span>
                 <span className="text-[color:var(--royal)]">●</span>
               </div>
             </div>

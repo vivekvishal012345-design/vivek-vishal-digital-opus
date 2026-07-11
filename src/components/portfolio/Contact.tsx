@@ -1,7 +1,11 @@
 import { Section } from "./Section";
-import { Mail, Linkedin, MapPin, Send } from "lucide-react";
+import { Mail, Linkedin, MapPin, Send, FileDown } from "lucide-react";
 import { useState, type FormEvent } from "react";
 import { motion } from "framer-motion";
+
+const EMAIL = "vivekvishal.contact@gmail.com";
+const LINKEDIN = "https://www.linkedin.com/in/vivekvishal";
+const RESUME = "/resume.pdf";
 
 export function Contact() {
   const [sent, setSent] = useState(false);
@@ -13,9 +17,9 @@ export function Contact() {
     const name = String(data.get("name") ?? "");
     const email = String(data.get("email") ?? "");
     const message = String(data.get("message") ?? "");
-    const subject = encodeURIComponent(`Portfolio enquiry from ${name}`);
+    const subject = encodeURIComponent(`Website enquiry from ${name}`);
     const body = encodeURIComponent(`${message}\n\n— ${name} (${email})`);
-    window.location.href = `mailto:hello@vivekvishal.com?subject=${subject}&body=${body}`;
+    window.location.href = `mailto:${EMAIL}?subject=${subject}&body=${body}`;
     setSent(true);
     form.reset();
   };
@@ -25,12 +29,12 @@ export function Contact() {
       id="contact"
       eyebrow="Contact"
       title="Let's talk."
-      intro="For opportunities, collaborations, or a considered conversation about finance and public service."
+      intro="For opportunities, collaborations, or a considered conversation about finance and markets."
     >
       <div className="grid gap-8 lg:grid-cols-[1fr_1.2fr]">
         <div className="space-y-4">
           <a
-            href="mailto:hello@vivekvishal.com"
+            href={`mailto:${EMAIL}`}
             className="card-elevated card-elevated-hover flex items-center gap-4 p-5"
           >
             <div className="grid h-11 w-11 place-items-center rounded-lg bg-[color:var(--royal)]/12 text-[color:var(--royal)]">
@@ -38,11 +42,11 @@ export function Contact() {
             </div>
             <div className="min-w-0">
               <p className="text-xs uppercase tracking-widest text-muted-foreground">Email</p>
-              <p className="truncate text-sm font-medium">hello@vivekvishal.com</p>
+              <p className="truncate text-sm font-medium">{EMAIL}</p>
             </div>
           </a>
           <a
-            href="https://www.linkedin.com/"
+            href={LINKEDIN}
             target="_blank"
             rel="noopener noreferrer"
             className="card-elevated card-elevated-hover flex items-center gap-4 p-5"
@@ -53,6 +57,19 @@ export function Contact() {
             <div>
               <p className="text-xs uppercase tracking-widest text-muted-foreground">LinkedIn</p>
               <p className="text-sm font-medium">Connect with me</p>
+            </div>
+          </a>
+          <a
+            href={RESUME}
+            download
+            className="card-elevated card-elevated-hover flex items-center gap-4 p-5"
+          >
+            <div className="grid h-11 w-11 place-items-center rounded-lg bg-[color:var(--royal)]/12 text-[color:var(--royal)]">
+              <FileDown className="h-5 w-5" />
+            </div>
+            <div>
+              <p className="text-xs uppercase tracking-widest text-muted-foreground">Resume</p>
+              <p className="text-sm font-medium">Download PDF</p>
             </div>
           </a>
           <div className="card-elevated flex items-center gap-4 p-5">
@@ -80,6 +97,7 @@ export function Contact() {
               <input
                 required
                 name="name"
+                autoComplete="name"
                 className="rounded-lg border border-border bg-[color:var(--surface)] px-3.5 py-2.5 text-sm outline-none transition focus:border-[color:var(--royal)] focus:ring-2 focus:ring-[color:var(--royal)]/25"
               />
             </label>
@@ -89,6 +107,7 @@ export function Contact() {
                 required
                 type="email"
                 name="email"
+                autoComplete="email"
                 className="rounded-lg border border-border bg-[color:var(--surface)] px-3.5 py-2.5 text-sm outline-none transition focus:border-[color:var(--royal)] focus:ring-2 focus:ring-[color:var(--royal)]/25"
               />
             </label>

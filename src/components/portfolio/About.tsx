@@ -4,24 +4,24 @@ import { motion } from "framer-motion";
 
 const blocks = [
   {
-    icon: Briefcase,
-    title: "Professional Background",
-    body: "Finance professional currently serving as Assistant Manager at DSP Asset Managers, with hands-on exposure to mutual funds, investment products, and client relationships across the asset management landscape.",
-  },
-  {
     icon: Compass,
-    title: "Career Journey",
-    body: "From a finance internship at Central Coalfields Limited to an MBA in Finance and a full-time role in asset management — a deliberate path building both analytical depth and real-world commercial judgment.",
+    title: "My Journey Into Finance",
+    body: "Finance drew me in early — first through curiosity about how markets move, then through the discipline of an MBA in Finance. What began as an interest slowly turned into a career I care deeply about.",
   },
   {
     icon: Sparkles,
-    title: "Interests",
-    body: "Capital markets, macroeconomics, public policy, and the intersection of finance and governance. A steady reader of annual reports, policy papers, and long-form business writing.",
+    title: "Interest in Capital Markets",
+    body: "I spend a lot of time following equities, fund flows, and how macroeconomic shifts translate into investor behaviour. Reading annual reports, fund factsheets, and policy notes is genuinely how I unwind.",
+  },
+  {
+    icon: Briefcase,
+    title: "Asset Management Experience",
+    body: "At DSP Asset Managers I work closely with distributors and advisors — supporting mutual fund conversations, helping position investment products, and building trust one relationship at a time.",
   },
   {
     icon: Target,
-    title: "Vision",
-    body: "To translate a decade of finance experience into meaningful public service — using markets literacy and disciplined execution to serve institutions and citizens alike.",
+    title: "Continuous Learning & Long-Term Vision",
+    body: "NISM certifications are behind me and deeper credentials are next. The long-term goal is simple: to grow into an exceptional finance professional whose work meaningfully helps investors compound wealth over decades.",
   },
 ];
 
@@ -30,8 +30,8 @@ export function About() {
     <Section
       id="about"
       eyebrow="About"
-      title="Finance today. Public service tomorrow."
-      intro="A short introduction to who I am, what I do, and where I'm headed."
+      title="A finance professional, quietly building."
+      intro="A short introduction to my journey, my work, and what I'm building towards."
     >
       <div className="grid gap-5 sm:grid-cols-2">
         {blocks.map((b, i) => (

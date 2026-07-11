@@ -1,18 +1,44 @@
 import { Section } from "./Section";
 import { motion } from "framer-motion";
-import { ArrowUpRight, LineChart, Search, PieChart, Sparkles, Trophy } from "lucide-react";
+import { LineChart, Search, PieChart, GraduationCap, Briefcase, Award } from "lucide-react";
 
 const projects = [
-  { icon: PieChart, title: "Portfolio Management", tag: "Case Study", body: "Constructing and reviewing model portfolios across risk profiles, with a focus on asset allocation discipline." },
-  { icon: Search, title: "Market Research", tag: "Ongoing", body: "Sector notes and macro tracking to inform product positioning and client conversations." },
-  { icon: LineChart, title: "Financial Analysis", tag: "Series", body: "Company deep-dives with ratio analysis, valuation lenses, and forward-looking assumptions." },
-  { icon: Sparkles, title: "Future Personal Projects", tag: "Coming Soon", body: "Space reserved for writing, tools, and public work — from finance explainers to policy commentary." },
+  {
+    icon: PieChart,
+    title: "Financial Cost Structure Analysis",
+    tag: "Internship · CCL",
+    body: "Completed during my summer internship at Central Coalfields Limited. Reviewed the cost structure across operational heads, worked on budget variance, and presented findings to the senior finance team.",
+  },
+  {
+    icon: LineChart,
+    title: "Mutual Fund Distribution",
+    tag: "Ongoing · DSP",
+    body: "Day-to-day work with distributors and advisors — product positioning, portfolio-level conversations, and helping partners serve their investors better.",
+  },
+  {
+    icon: Search,
+    title: "Market Research",
+    tag: "Ongoing",
+    body: "Continuous tracking of macroeconomic developments, fund positioning across categories, and investment themes shaping investor allocations.",
+  },
 ];
 
-const achievements = [
-  { title: "Placeholder Achievement", body: "Space reserved for a notable award, recognition, or milestone worth celebrating." },
-  { title: "Placeholder Achievement", body: "Space reserved for a professional distinction or academic honor." },
-  { title: "Placeholder Achievement", body: "Space reserved for a community or leadership contribution." },
+const milestones = [
+  {
+    icon: GraduationCap,
+    title: "MBA in Finance",
+    body: "Graduated with a specialisation in Finance, building the analytical foundation for a career in capital markets.",
+  },
+  {
+    icon: Award,
+    title: "NISM Series V-A Certification",
+    body: "Cleared the mutual fund distributors certification — the core regulatory credential for advising on mutual funds in India.",
+  },
+  {
+    icon: Briefcase,
+    title: "Assistant Manager at DSP Asset Managers",
+    body: "Moved into a full-time asset management role, taking ownership of distributor relationships and product positioning.",
+  },
 ];
 
 export function ProjectsAchievements() {
@@ -42,10 +68,7 @@ export function ProjectsAchievements() {
                   {p.tag}
                 </span>
               </div>
-              <h3 className="mt-6 flex items-center gap-2 text-lg font-medium tracking-tight">
-                {p.title}
-                <ArrowUpRight className="h-4 w-4 opacity-0 transition-all group-hover:opacity-100 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 text-[color:var(--royal)]" />
-              </h3>
+              <h3 className="mt-6 text-lg font-medium tracking-tight">{p.title}</h3>
               <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{p.body}</p>
             </motion.article>
           ))}
@@ -54,25 +77,33 @@ export function ProjectsAchievements() {
 
       <Section
         id="achievements"
-        eyebrow="Achievements"
-        title="Milestones worth marking."
-        intro="Space kept for the wins to come — professional, academic, and personal."
+        eyebrow="Milestones"
+        title="Professional milestones."
+        intro="A timeline of career growth, certifications, and meaningful professional progress."
       >
-        <div className="grid gap-5 md:grid-cols-3">
-          {achievements.map((a, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-60px" }}
-              transition={{ duration: 0.5, delay: i * 0.06 }}
-              className="card-elevated card-elevated-hover p-6"
-            >
-              <Trophy className="h-5 w-5 text-[color:var(--royal)]" />
-              <h3 className="mt-4 text-base font-medium tracking-tight">{a.title}</h3>
-              <p className="mt-2 text-sm text-muted-foreground">{a.body}</p>
-            </motion.div>
-          ))}
+        <div className="relative">
+          <div className="absolute left-4 top-2 bottom-2 w-px bg-border sm:left-6" aria-hidden />
+          <div className="space-y-6">
+            {milestones.map((m, i) => (
+              <motion.div
+                key={m.title}
+                initial={{ opacity: 0, x: -16 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, margin: "-60px" }}
+                transition={{ duration: 0.5, delay: i * 0.06 }}
+                className="relative pl-12 sm:pl-16"
+              >
+                <span className="absolute left-[11px] top-6 h-2.5 w-2.5 rounded-full bg-[color:var(--royal)] ring-4 ring-background sm:left-[19px]" />
+                <div className="card-elevated card-elevated-hover p-6">
+                  <div className="mb-3 inline-flex h-9 w-9 items-center justify-center rounded-lg bg-[color:var(--royal)]/12 text-[color:var(--royal)]">
+                    <m.icon className="h-4.5 w-4.5" />
+                  </div>
+                  <h3 className="text-base font-medium tracking-tight">{m.title}</h3>
+                  <p className="mt-2 text-sm text-muted-foreground">{m.body}</p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </Section>
     </>

@@ -6,22 +6,25 @@ const items = [
     role: "Assistant Manager",
     company: "DSP Asset Managers",
     period: "Present",
-    location: "India",
+    location: "Nagpur, India",
     points: [
-      "Drive distribution and relationship management across mutual fund and investment product lines.",
-      "Partner with advisors and institutional stakeholders to grow assets under management.",
-      "Deliver market updates, product insights, and portfolio guidance to key partners.",
+      "Manage distributor relationships across the region — supporting IFAs and partner firms with product queries, servicing, and day-to-day engagement.",
+      "Position mutual fund and investment products with advisors through fund updates, portfolio commentary, and category-level conversations.",
+      "Drive business development by identifying growth opportunities within the existing advisor network and onboarding new partners.",
+      "Communicate market developments and fund performance clearly, so advisors can guide their clients with confidence.",
+      "Own client servicing at a partner level — resolving operational queries end-to-end and ensuring a smooth investor experience.",
     ],
   },
   {
     role: "Finance Intern",
     company: "Central Coalfields Limited (CCL)",
-    period: "Internship",
-    location: "India",
+    period: "Summer Internship",
+    location: "Ranchi, India",
     points: [
-      "Analysed operational finance workflows across procurement, budgeting, and reporting.",
-      "Contributed to a live project on financial planning and cost analysis.",
-      "Presented findings to senior finance leadership at the close of the engagement.",
+      "Studied the organisation's cost structure across key operational heads and identified areas worth reviewing.",
+      "Worked on budget review and variance analysis, comparing planned vs. actual spend across departments.",
+      "Assisted with internal financial reporting workflows and understood how figures flowed from source to statement.",
+      "Presented the final findings and recommendations to the senior finance team at the close of the engagement.",
     ],
   },
 ];
@@ -31,8 +34,8 @@ export function Experience() {
     <Section
       id="experience"
       eyebrow="Experience"
-      title="A steady climb through finance."
-      intro="Roles held, work delivered, and lessons carried forward."
+      title="Where I've worked, and what I've learned."
+      intro="Roles that have shaped how I think about finance, markets, and relationships."
     >
       <div className="relative">
         <div className="absolute left-4 top-2 bottom-2 w-px bg-border sm:left-6" aria-hidden />
