@@ -73,7 +73,7 @@ export function Hero() {
               <a
                 href="/resume.pdf"
                 download
-                className="group inline-flex items-center gap-2 rounded-full bg-[color:var(--royal)] px-5 py-2.5 text-sm font-medium text-white transition-all hover:brightness-110"
+                className="group inline-flex min-h-11 items-center gap-2 rounded-full bg-[color:var(--royal)] px-5 py-2.5 text-sm font-medium text-white shadow-lg shadow-[color:var(--royal)]/20 transition-all hover:brightness-110 hover:shadow-xl hover:shadow-[color:var(--royal)]/30 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--royal)] focus-visible:ring-offset-2 focus-visible:ring-offset-background"
               >
                 <FileDown className="h-4 w-4" />
                 Download Resume
