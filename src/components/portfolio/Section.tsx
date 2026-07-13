@@ -12,14 +12,14 @@ interface Props {
 
 export function Section({ id, eyebrow, title, intro, children, className = "" }: Props) {
   return (
-    <section id={id} className={`scroll-mt-24 py-20 sm:py-28 ${className}`}>
+    <section id={id} className={`scroll-mt-20 py-16 sm:py-20 md:py-24 ${className}`}>
       <div className="container-x">
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-          className="mb-12 max-w-2xl"
+          className="mb-10 max-w-2xl sm:mb-12"
         >
           {eyebrow && (
             <div className="mb-3 inline-flex items-center gap-2 text-xs font-medium uppercase tracking-[0.18em] text-[color:var(--royal)]">
