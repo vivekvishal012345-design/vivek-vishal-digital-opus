@@ -1,7 +1,9 @@
 import { Section } from "./Section";
-import { Mail, Linkedin, MapPin, Send, FileDown } from "lucide-react";
+import { Mail, Linkedin, MapPin, Send, FileDown, Copy, Check } from "lucide-react";
 import { useState, type FormEvent } from "react";
 import { motion } from "framer-motion";
+import { toast } from "sonner";
+
 
 const EMAIL = "vivekvishal.contact@gmail.com";
 const LINKEDIN = "https://www.linkedin.com/in/vivekvishal";
