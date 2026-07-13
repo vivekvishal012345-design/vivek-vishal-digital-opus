@@ -1,9 +1,12 @@
 import { motion } from "framer-motion";
 import { ArrowUpRight, FileDown, Linkedin, Mail, MapPin, User } from "lucide-react";
+import { useState } from "react";
 
 export function Hero() {
+  const [imgOk, setImgOk] = useState(true);
   return (
-    <section id="top" className="relative overflow-hidden pt-32 pb-20 sm:pt-40 sm:pb-28">
+    <section id="top" className="relative overflow-hidden pt-28 pb-16 sm:pt-32 sm:pb-20 md:pt-36 md:pb-24">
+
       {/* Ambient background */}
       <div className="pointer-events-none absolute inset-0 -z-10">
         <div className="absolute left-1/2 top-0 h-[500px] w-[900px] -translate-x-1/2 rounded-full bg-[color:var(--royal)] opacity-[0.10] blur-[120px]" />
