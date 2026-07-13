@@ -117,33 +117,32 @@ export function Hero() {
           >
             <div className="absolute -inset-4 rounded-3xl bg-gradient-to-br from-[color:var(--royal)]/30 via-transparent to-transparent blur-2xl" />
             <div className="relative h-full w-full overflow-hidden rounded-3xl border border-border bg-[color:var(--surface)] shadow-2xl shadow-[color:var(--royal)]/10">
-              <img
-                src="/profile.jpg"
-                alt="Portrait of Vivek Vishal"
-                loading="eager"
-                decoding="async"
-                className="absolute inset-0 h-full w-full object-cover"
-                onError={(e) => {
-                  (e.currentTarget as HTMLImageElement).style.display = "none";
-                }}
-              />
-              <div
-                className="absolute inset-0"
-                style={{
-                  background:
-                    "linear-gradient(135deg, color-mix(in oklab, var(--royal) 25%, transparent) 0%, transparent 60%)",
-                }}
-              />
-              <div className="absolute inset-0 grid place-items-center">
-                <div className="flex flex-col items-center gap-4 text-center">
-                  <div className="grid h-32 w-32 place-items-center rounded-full border border-border bg-[color:var(--card)] text-foreground/70">
-                    <User className="h-14 w-14" strokeWidth={1.25} />
+              {imgOk ? (
+                <img
+                  src="/profile.jpg"
+                  alt="Portrait of Vivek Vishal"
+                  loading="eager"
+                  decoding="async"
+                  className="absolute inset-0 h-full w-full object-cover"
+                  onError={() => setImgOk(false)}
+                />
+              ) : (
+                <>
+                  <div
+                    className="absolute inset-0"
+                    style={{
+                      background:
+                        "linear-gradient(135deg, color-mix(in oklab, var(--royal) 25%, transparent) 0%, transparent 60%)",
+                    }}
+                  />
+                  <div className="absolute inset-0 grid place-items-center">
+                    <div className="grid h-28 w-28 place-items-center rounded-full border border-border bg-[color:var(--card)] text-foreground/60">
+                      <User className="h-12 w-12" strokeWidth={1.25} />
+                    </div>
                   </div>
-                  <p className="max-w-[220px] text-xs text-muted-foreground">
-                    Add a professional portrait at <code>/public/profile.jpg</code>.
-                  </p>
-                </div>
-              </div>
+                </>
+              )}
+
               <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between rounded-xl border border-border bg-[color:var(--card)]/80 px-3 py-2 text-xs text-muted-foreground backdrop-blur">
                 <span>Finance · Markets · Investments</span>
                 <span className="text-[color:var(--royal)]">●</span>
