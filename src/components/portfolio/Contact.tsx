@@ -1,7 +1,9 @@
 import { Section } from "./Section";
-import { Mail, Linkedin, MapPin, Send, FileDown } from "lucide-react";
+import { Mail, Linkedin, MapPin, Send, FileDown, Copy, Check } from "lucide-react";
 import { useState, type FormEvent } from "react";
 import { motion } from "framer-motion";
+import { toast } from "sonner";
+
 
 const EMAIL = "vivekvishal.contact@gmail.com";
 const LINKEDIN = "https://www.linkedin.com/in/vivekvishal";
@@ -9,6 +11,19 @@ const RESUME = "/resume.pdf";
 
 export function Contact() {
   const [sent, setSent] = useState(false);
+  const [copied, setCopied] = useState(false);
+
+  const copyEmail = async () => {
+    try {
+      await navigator.clipboard.writeText(EMAIL);
+      setCopied(true);
+      toast.success("Email copied to clipboard");
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      toast.error("Could not copy email");
+    }
+  };
+
 
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -33,18 +48,30 @@ export function Contact() {
     >
       <div className="grid gap-8 lg:grid-cols-[1fr_1.2fr]">
         <div className="space-y-4">
-          <a
-            href={`mailto:${EMAIL}`}
-            className="card-elevated card-elevated-hover flex items-center gap-4 p-5"
-          >
-            <div className="grid h-11 w-11 place-items-center rounded-lg bg-[color:var(--royal)]/12 text-[color:var(--royal)]">
-              <Mail className="h-5 w-5" />
-            </div>
-            <div className="min-w-0">
-              <p className="text-xs uppercase tracking-widest text-muted-foreground">Email</p>
-              <p className="truncate text-sm font-medium">{EMAIL}</p>
-            </div>
-          </a>
+          <div className="card-elevated card-elevated-hover flex items-center gap-4 p-5">
+            <a
+              href={`mailto:${EMAIL}`}
+              className="flex min-w-0 flex-1 items-center gap-4 focus-visible:outline-none"
+              aria-label={`Email ${EMAIL}`}
+            >
+              <div className="grid h-11 w-11 shrink-0 place-items-center rounded-lg bg-[color:var(--royal)]/12 text-[color:var(--royal)]">
+                <Mail className="h-5 w-5" />
+              </div>
+              <div className="min-w-0">
+                <p className="text-xs uppercase tracking-widest text-muted-foreground">Email</p>
+                <p className="truncate text-sm font-medium">{EMAIL}</p>
+              </div>
+            </a>
+            <button
+              type="button"
+              onClick={copyEmail}
+              aria-label="Copy email address"
+              className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-border text-muted-foreground transition-all hover:border-[color:var(--royal)]/50 hover:text-[color:var(--royal)] active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--royal)]"
+            >
+              {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
+            </button>
+          </div>
+
           <a
             href={LINKEDIN}
             target="_blank"

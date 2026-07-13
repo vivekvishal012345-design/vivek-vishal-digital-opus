@@ -4,18 +4,19 @@ import { useEffect, useState } from "react";
 import { useTheme } from "@/hooks/use-theme";
 
 const links = [
-  { href: "#about", label: "About" },
-  { href: "#experience", label: "Experience" },
-  { href: "#education", label: "Education" },
-  { href: "#skills", label: "Skills" },
-  { href: "#projects", label: "Projects" },
-  { href: "#contact", label: "Contact" },
+  { href: "#about", label: "About", id: "about" },
+  { href: "#experience", label: "Experience", id: "experience" },
+  { href: "#education", label: "Education", id: "education" },
+  { href: "#skills", label: "Skills", id: "skills" },
+  { href: "#projects", label: "Projects", id: "projects" },
+  { href: "#contact", label: "Contact", id: "contact" },
 ];
 
 export function Nav() {
   const { theme, toggle, mounted } = useTheme();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [active, setActive] = useState<string>("");
   const { scrollYProgress } = useScroll();
   const progress = useSpring(scrollYProgress, { stiffness: 120, damping: 30, mass: 0.2 });
 
@@ -26,71 +27,142 @@ export function Nav() {
     return () => window.removeEventListener("scroll", on);
   }, []);
 
+  useEffect(() => {
+    const sections = links
+      .map((l) => document.getElementById(l.id))
+      .filter((el): el is HTMLElement => !!el);
+    if (!sections.length) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((e) => e.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (visible) setActive(visible.target.id);
+      },
+      { rootMargin: "-45% 0px -45% 0px", threshold: [0, 0.25, 0.5, 0.75, 1] }
+    );
+    sections.forEach((s) => observer.observe(s));
+    return () => observer.disconnect();
+  }, []);
+
+  // Lock body scroll when mobile menu open
+  useEffect(() => {
+    document.body.style.overflow = open ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [open]);
+
   return (
     <>
       <motion.div
         style={{ scaleX: progress }}
-        className="fixed left-0 right-0 top-0 z-[60] h-[2px] origin-left bg-[color:var(--royal)]"
+        className="fixed left-0 right-0 top-0 z-[70] h-[2px] origin-left bg-[color:var(--royal)]"
       />
       <header
         className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
-          scrolled ? "glass border-b border-border" : "bg-transparent"
+          scrolled || open ? "glass border-b border-border" : "bg-transparent"
         }`}
       >
         <nav className="container-x flex h-16 items-center justify-between">
-          <a href="#top" className="flex items-center gap-2 font-display text-lg tracking-tight">
+          <a
+            href="#top"
+            onClick={() => setOpen(false)}
+            className="flex items-center gap-2 font-display text-lg tracking-tight"
+          >
             <span className="grid h-8 w-8 place-items-center rounded-md bg-[color:var(--royal)] text-white font-semibold">
               V
             </span>
             <span className="hidden sm:inline">Vivek Vishal</span>
           </a>
-          <div className="hidden items-center gap-8 md:flex">
-            {links.map((l) => (
-              <a
-                key={l.href}
-                href={l.href}
-                className="text-sm text-muted-foreground transition-colors hover:text-foreground"
-              >
-                {l.label}
-              </a>
-            ))}
+          <div className="hidden items-center gap-1 md:flex">
+            {links.map((l) => {
+              const isActive = active === l.id;
+              return (
+                <a
+                  key={l.href}
+                  href={l.href}
+                  className={`relative rounded-full px-3 py-1.5 text-sm transition-colors ${
+                    isActive
+                      ? "text-foreground"
+                      : "text-muted-foreground hover:text-foreground"
+                  }`}
+                >
+                  {isActive && (
+                    <motion.span
+                      layoutId="nav-active"
+                      className="absolute inset-0 -z-10 rounded-full bg-[color:var(--accent)]"
+                      transition={{ type: "spring", stiffness: 380, damping: 32 }}
+                    />
+                  )}
+                  {l.label}
+                </a>
+              );
+            })}
           </div>
           <div className="flex items-center gap-2">
             {mounted && (
               <button
                 onClick={toggle}
                 aria-label="Toggle theme"
-                className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-border text-foreground transition-colors hover:bg-accent"
+                className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-border text-foreground transition-all hover:bg-accent active:scale-95"
               >
                 {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
               </button>
             )}
             <button
               onClick={() => setOpen((v) => !v)}
-              aria-label="Toggle menu"
-              className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-border md:hidden"
+              aria-label={open ? "Close menu" : "Open menu"}
+              aria-expanded={open}
+              className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-border transition-all active:scale-95 md:hidden"
             >
               {open ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
             </button>
           </div>
         </nav>
-        {open && (
-          <div className="border-t border-border md:hidden">
-            <div className="container-x flex flex-col py-3">
-              {links.map((l) => (
-                <a
+      </header>
+
+      {/* Mobile menu overlay */}
+      {open && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 top-16 z-40 md:hidden"
+        >
+          <div className="absolute inset-0 glass border-t border-border" />
+          <motion.div
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+            className="container-x relative flex flex-col py-4"
+          >
+            {links.map((l, i) => {
+              const isActive = active === l.id;
+              return (
+                <motion.a
                   key={l.href}
                   href={l.href}
                   onClick={() => setOpen(false)}
-                  className="py-2 text-sm text-muted-foreground hover:text-foreground"
+                  initial={{ opacity: 0, x: -8 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: i * 0.04 }}
+                  className={`flex items-center justify-between rounded-lg px-3 py-3 text-base transition-colors ${
+                    isActive
+                      ? "bg-[color:var(--accent)] text-foreground"
+                      : "text-muted-foreground hover:bg-[color:var(--accent)]/60 hover:text-foreground"
+                  }`}
                 >
                   {l.label}
-                </a>
-              ))}
-            </div>
-          </div>
-        )}
-      </header>
+                  {isActive && (
+                    <span className="h-1.5 w-1.5 rounded-full bg-[color:var(--royal)]" />
+                  )}
+                </motion.a>
+              );
+            })}
+          </motion.div>
+        </motion.div>
+      )}
     </>
   );
 }
