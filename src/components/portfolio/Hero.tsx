@@ -82,7 +82,7 @@ export function Hero() {
                 href="https://www.linkedin.com/in/vivekvishal"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-full border border-border bg-[color:var(--surface)] px-5 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-accent"
+                className="inline-flex min-h-11 items-center gap-2 rounded-full border border-border bg-[color:var(--surface)] px-5 py-2.5 text-sm font-medium text-foreground transition-all hover:bg-accent active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--royal)] focus-visible:ring-offset-2 focus-visible:ring-offset-background"
               >
                 <Linkedin className="h-4 w-4" />
                 Connect on LinkedIn
