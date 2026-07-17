@@ -1,6 +1,6 @@
 import { Linkedin, Mail, ArrowUp } from "lucide-react";
 
-const EMAIL = "vivekvishal.contact@gmail.com";
+const EMAIL = "hello@vivekvishal.com";
 const LINKEDIN = "https://www.linkedin.com/in/vivekvishal";
 
 export function Footer() {

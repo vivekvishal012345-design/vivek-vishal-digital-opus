@@ -3,20 +3,16 @@ import { motion } from "framer-motion";
 
 const groups: { category: string; items: string[] }[] = [
   {
-    category: "Finance & Markets",
-    items: ["Finance", "Capital Markets", "Financial Analysis"],
+    category: "Domain",
+    items: ["Mutual Funds", "Capital Markets", "Investment Products"],
   },
   {
-    category: "Products",
-    items: ["Mutual Funds", "Investment Products"],
+    category: "Work",
+    items: ["Distributor Engagement", "Business Development", "Product Positioning", "Client Servicing"],
   },
   {
-    category: "Business",
-    items: ["Relationship Management", "Business Development", "Client Engagement"],
-  },
-  {
-    category: "Tools & Communication",
-    items: ["Excel", "PowerPoint", "Communication", "Presentation"],
+    category: "Tools",
+    items: ["Excel", "PowerPoint"],
   },
 ];
 
@@ -25,8 +21,8 @@ export function Skills() {
     <Section
       id="skills"
       eyebrow="Skills"
-      title="Craft, honed over time."
-      intro="A working toolkit built across markets, spreadsheets, and stakeholder conversations."
+      title="Skills."
+      intro="Areas I work across."
     >
       <div className="space-y-8">
         {groups.map((g) => (

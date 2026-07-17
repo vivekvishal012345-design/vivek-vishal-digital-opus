@@ -34,7 +34,7 @@ export function Hero() {
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
                 <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500" />
               </span>
-              Currently at DSP Asset Managers
+              Assistant Manager, DSP Mutual Fund
             </motion.div>
 
             <motion.h1
@@ -52,7 +52,7 @@ export function Hero() {
               transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
               className="mt-5 text-sm font-medium text-muted-foreground sm:text-base"
             >
-              MBA (Finance) · Assistant Manager at DSP Asset Managers · Investment & Capital Markets Professional
+              MBA (Finance) · Assistant Manager, DSP Mutual Fund
             </motion.p>
 
             <motion.p
@@ -61,7 +61,7 @@ export function Hero() {
               transition={{ duration: 0.7, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
               className="mt-8 max-w-xl text-lg leading-relaxed text-foreground/85 sm:text-xl"
             >
-              Helping investors make informed financial decisions while continuously building expertise in capital markets, investment products, and long-term wealth creation.
+              I work with distributors and advisors across the region — supporting mutual fund distribution, product positioning, and business development for DSP Mutual Fund.
             </motion.p>
 
             <motion.div
@@ -85,14 +85,14 @@ export function Hero() {
                 className="inline-flex min-h-11 items-center gap-2 rounded-full border border-border bg-[color:var(--surface)] px-5 py-2.5 text-sm font-medium text-foreground transition-all hover:bg-accent active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--royal)] focus-visible:ring-offset-2 focus-visible:ring-offset-background"
               >
                 <Linkedin className="h-4 w-4" />
-                Connect on LinkedIn
+                LinkedIn
               </a>
               <a
                 href="#contact"
                 className="group inline-flex items-center gap-2 rounded-full border border-transparent px-5 py-2.5 text-sm font-medium text-foreground transition-colors hover:border-border"
               >
                 <Mail className="h-4 w-4" />
-                Contact Me
+                Get in touch
                 <ArrowUpRight className="h-3.5 w-3.5 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
               </a>
             </motion.div>
@@ -144,7 +144,7 @@ export function Hero() {
               )}
 
               <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between rounded-xl border border-border bg-[color:var(--card)]/80 px-3 py-2 text-xs text-muted-foreground backdrop-blur">
-                <span>Finance · Markets · Investments</span>
+                <span>Mutual Funds · Distribution · Capital Markets</span>
                 <span className="text-[color:var(--royal)]">●</span>
               </div>
             </div>
