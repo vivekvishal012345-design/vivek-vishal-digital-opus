@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import { toast } from "sonner";
 
 
-const EMAIL = "vivekvishal.contact@gmail.com";
+const EMAIL = "hello@vivekvishal.com";
 const LINKEDIN = "https://www.linkedin.com/in/vivekvishal";
 const RESUME = "/resume.pdf";
 
@@ -43,8 +43,8 @@ export function Contact() {
     <Section
       id="contact"
       eyebrow="Contact"
-      title="Let's talk."
-      intro="For opportunities, collaborations, or a considered conversation about finance and markets."
+      title="Get in touch."
+      intro="For opportunities, referrals, or a conversation about markets."
     >
       <div className="grid gap-8 lg:grid-cols-[1fr_1.2fr]">
         <div className="space-y-4">
@@ -150,7 +150,7 @@ export function Contact() {
           </label>
           <div className="mt-5 flex items-center justify-between gap-3">
             <p className="text-xs text-muted-foreground">
-              {sent ? "Opening your email client…" : "Responses within a couple of business days."}
+              {sent ? "Opening your email client…" : "I usually reply within two business days."}
             </p>
             <button
               type="submit"

@@ -1,43 +1,31 @@
 import { Section } from "./Section";
 import { motion } from "framer-motion";
-import { LineChart, Search, PieChart, GraduationCap, Briefcase, Award } from "lucide-react";
+import { PieChart, GraduationCap, Briefcase, Award } from "lucide-react";
 
 const projects = [
   {
     icon: PieChart,
-    title: "Financial Cost Structure Analysis",
+    title: "Cost Structure Review",
     tag: "Internship · CCL",
-    body: "Completed during my summer internship at Central Coalfields Limited. Reviewed the cost structure across operational heads, worked on budget variance, and presented findings to the senior finance team.",
-  },
-  {
-    icon: LineChart,
-    title: "Mutual Fund Distribution",
-    tag: "Ongoing · DSP",
-    body: "Day-to-day work with distributors and advisors — product positioning, portfolio-level conversations, and helping partners serve their investors better.",
-  },
-  {
-    icon: Search,
-    title: "Market Research",
-    tag: "Ongoing",
-    body: "Continuous tracking of macroeconomic developments, fund positioning across categories, and investment themes shaping investor allocations.",
+    body: "Reviewed operational cost heads and worked on budget vs. actual variance analysis. Findings presented to the senior finance team.",
   },
 ];
 
 const milestones = [
   {
     icon: GraduationCap,
-    title: "MBA in Finance",
-    body: "Graduated with a specialisation in Finance, building the analytical foundation for a career in capital markets.",
+    title: "MBA in Finance, Sarala Birla University",
+    body: "Completed with a specialisation in Finance.",
   },
   {
     icon: Award,
-    title: "NISM Series V-A Certification",
-    body: "Cleared the mutual fund distributors certification — the core regulatory credential for advising on mutual funds in India.",
+    title: "NISM Series V-A",
+    body: "Cleared the Mutual Fund Distributors Certification.",
   },
   {
     icon: Briefcase,
-    title: "Assistant Manager at DSP Asset Managers",
-    body: "Moved into a full-time asset management role, taking ownership of distributor relationships and product positioning.",
+    title: "Assistant Manager, DSP Mutual Fund",
+    body: "Joined DSP Mutual Fund covering distributor relationships in Nagpur.",
   },
 ];
 
@@ -48,7 +36,6 @@ export function ProjectsAchievements() {
         id="projects"
         eyebrow="Projects"
         title="Selected work."
-        intro="A window into how I think about markets, analysis, and impact."
       >
         <div className="grid gap-5 sm:grid-cols-2">
           {projects.map((p, i) => (
@@ -78,8 +65,7 @@ export function ProjectsAchievements() {
       <Section
         id="achievements"
         eyebrow="Milestones"
-        title="Professional milestones."
-        intro="A timeline of career growth, certifications, and meaningful professional progress."
+        title="Milestones."
       >
         <div className="relative">
           <div className="absolute left-4 top-2 bottom-2 w-px bg-border sm:left-6" aria-hidden />

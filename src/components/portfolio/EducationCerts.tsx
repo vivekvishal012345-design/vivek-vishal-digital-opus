@@ -1,39 +1,30 @@
 import { Section } from "./Section";
-import { GraduationCap, Award, BookOpen, Sparkles } from "lucide-react";
+import { GraduationCap, Award, BookOpen } from "lucide-react";
 import { motion } from "framer-motion";
 
 const education = [
   {
     icon: GraduationCap,
     degree: "MBA — Finance",
-    school: "Institute of Management, Nirma University",
-    year: "2022 – 2024",
+    school: "Sarala Birla University",
+    year: "Postgraduate",
     detail:
-      "Specialised in Finance with coursework across corporate finance, investment analysis, financial markets, and derivatives. Engaged with live projects, case competitions, and a summer internship in the finance function of a public-sector enterprise.",
+      "Specialised in Finance, with coursework across corporate finance, investment analysis, and financial markets.",
   },
   {
     icon: BookOpen,
-    degree: "Bachelor of Commerce (B.Com)",
+    degree: "B.Com",
     school: "Ranchi University",
-    year: "2017 – 2020",
+    year: "Undergraduate",
     detail:
-      "Undergraduate degree in commerce covering accounting, economics, business law, and financial management — the foundation on which the rest of the finance journey has been built.",
+      "Undergraduate degree in commerce — accounting, economics, business law, and financial management.",
   },
 ];
 
 const certs = [
   {
     title: "NISM Series V-A",
-    detail: "Mutual Fund Distributors Certification — the core regulatory qualification for advising on mutual funds in India.",
-  },
-  {
-    title: "NISM Certifications",
-    detail: "Additional NISM modules completed to strengthen understanding across investment products and market operations.",
-  },
-  {
-    title: "Continuous Learning",
-    detail: "Currently expanding expertise through continuous learning in capital markets and investment products.",
-    icon: Sparkles,
+    detail: "Mutual Fund Distributors Certification — the SEBI-mandated qualification for advising on mutual funds in India.",
   },
 ];
 
@@ -43,8 +34,8 @@ export function EducationCerts() {
       <Section
         id="education"
         eyebrow="Education"
-        title="Formal grounding."
-        intro="Degrees earned and the thinking they shaped."
+        title="Education."
+        intro="Degrees, in order."
       >
         <div className="grid gap-5 sm:grid-cols-2">
           {education.map((e, i) => (
@@ -71,27 +62,23 @@ export function EducationCerts() {
       <Section
         id="certifications"
         eyebrow="Certifications"
-        title="Credentials in hand."
-        intro="Regulatory certifications completed, with more in progress."
+        title="Certifications."
       >
         <div className="grid gap-5 md:grid-cols-3">
-          {certs.map((c, i) => {
-            const Icon = c.icon ?? Award;
-            return (
-              <motion.div
-                key={c.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-60px" }}
-                transition={{ duration: 0.5, delay: i * 0.06 }}
-                className="card-elevated card-elevated-hover p-6"
-              >
-                <Icon className="h-5 w-5 text-[color:var(--royal)]" />
-                <h3 className="mt-4 text-base font-medium tracking-tight">{c.title}</h3>
-                <p className="mt-2 text-sm text-muted-foreground">{c.detail}</p>
-              </motion.div>
-            );
-          })}
+          {certs.map((c, i) => (
+            <motion.div
+              key={c.title}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-60px" }}
+              transition={{ duration: 0.5, delay: i * 0.06 }}
+              className="card-elevated card-elevated-hover p-6"
+            >
+              <Award className="h-5 w-5 text-[color:var(--royal)]" />
+              <h3 className="mt-4 text-base font-medium tracking-tight">{c.title}</h3>
+              <p className="mt-2 text-sm text-muted-foreground">{c.detail}</p>
+            </motion.div>
+          ))}
         </div>
       </Section>
     </>

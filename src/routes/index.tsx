@@ -12,25 +12,25 @@ import { Footer } from "@/components/portfolio/Footer";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Vivek Vishal | MBA Finance | Assistant Manager at DSP Asset Managers" },
+      { title: "Vivek Vishal | Assistant Manager, DSP Mutual Fund" },
       {
         name: "description",
         content:
-          "Personal website of Vivek Vishal featuring professional experience, certifications, projects, and contact information.",
+          "Vivek Vishal — MBA (Finance), Assistant Manager at DSP Mutual Fund. Mutual fund distribution, product positioning, and business development in Nagpur, India.",
       },
-      { property: "og:title", content: "Vivek Vishal | MBA Finance | Assistant Manager at DSP Asset Managers" },
+      { property: "og:title", content: "Vivek Vishal | Assistant Manager, DSP Mutual Fund" },
       {
         property: "og:description",
         content:
-          "Personal website of Vivek Vishal featuring professional experience, certifications, projects, and contact information.",
+          "MBA (Finance). Assistant Manager at DSP Mutual Fund. Mutual fund distribution and distributor engagement in Nagpur, India.",
       },
       { property: "og:type", content: "website" },
       { property: "og:url", content: "/" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:title", content: "Vivek Vishal | MBA Finance | DSP Asset Managers" },
+      { name: "twitter:title", content: "Vivek Vishal | DSP Mutual Fund" },
       {
         name: "twitter:description",
-        content: "MBA (Finance) · Assistant Manager, DSP Asset Managers · Investment & Capital Markets Professional.",
+        content: "MBA (Finance) · Assistant Manager, DSP Mutual Fund · Mutual fund distribution & capital markets.",
       },
     ],
     links: [{ rel: "canonical", href: "/" }],
@@ -42,17 +42,21 @@ export const Route = createFileRoute("/")({
           "@type": "Person",
           name: "Vivek Vishal",
           jobTitle: "Assistant Manager",
-          worksFor: { "@type": "Organization", name: "DSP Asset Managers" },
+          worksFor: { "@type": "Organization", name: "DSP Mutual Fund" },
           address: { "@type": "PostalAddress", addressLocality: "Nagpur", addressCountry: "IN" },
+          email: "hello@vivekvishal.com",
+          alumniOf: [
+            { "@type": "CollegeOrUniversity", name: "Sarala Birla University" },
+            { "@type": "CollegeOrUniversity", name: "Ranchi University" },
+          ],
           description:
-            "MBA (Finance), Assistant Manager at DSP Asset Managers — investment and capital markets professional.",
+            "MBA (Finance), Assistant Manager at DSP Mutual Fund — mutual fund distribution and capital markets.",
           knowsAbout: [
-            "Finance",
-            "Capital Markets",
             "Mutual Funds",
+            "Capital Markets",
             "Investment Products",
-            "Financial Analysis",
-            "Relationship Management",
+            "Distributor Engagement",
+            "Business Development",
           ],
         }),
       },

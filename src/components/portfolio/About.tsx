@@ -1,27 +1,27 @@
 import { Section } from "./Section";
-import { Briefcase, Compass, Sparkles, Target } from "lucide-react";
+import { Briefcase, Compass, LineChart, BookOpen } from "lucide-react";
 import { motion } from "framer-motion";
 
 const blocks = [
   {
     icon: Compass,
-    title: "My Journey Into Finance",
-    body: "Finance drew me in early — first through curiosity about how markets move, then through the discipline of an MBA in Finance. What began as an interest slowly turned into a career I care deeply about.",
-  },
-  {
-    icon: Sparkles,
-    title: "Interest in Capital Markets",
-    body: "I spend a lot of time following equities, fund flows, and how macroeconomic shifts translate into investor behaviour. Reading annual reports, fund factsheets, and policy notes is genuinely how I unwind.",
+    title: "Background",
+    body: "Trained in finance through a B.Com from Ranchi University and an MBA in Finance from Sarala Birla University. My work sits at the intersection of markets, products, and the people who advise on them.",
   },
   {
     icon: Briefcase,
-    title: "Asset Management Experience",
-    body: "At DSP Asset Managers I work closely with distributors and advisors — supporting mutual fund conversations, helping position investment products, and building trust one relationship at a time.",
+    title: "Current Role",
+    body: "Assistant Manager at DSP Mutual Fund, based in Nagpur. I work with distributors and advisors across the region on mutual fund distribution, product positioning, and business development.",
   },
   {
-    icon: Target,
-    title: "Continuous Learning & Long-Term Vision",
-    body: "NISM certifications are behind me and deeper credentials are next. The long-term goal is simple: to grow into an exceptional finance professional whose work meaningfully helps investors compound wealth over decades.",
+    icon: LineChart,
+    title: "Focus Areas",
+    body: "Day-to-day work centres on equity and debt mutual funds — reading factsheets, tracking category performance, and translating fund positioning into conversations advisors can use with their clients.",
+  },
+  {
+    icon: BookOpen,
+    title: "How I Work",
+    body: "I prefer to know the product well before I speak to it. Most of my time goes into reading — annual reports, fund commentaries, policy notes — and using that reading to be genuinely useful to the partners I work with.",
   },
 ];
 
@@ -30,8 +30,8 @@ export function About() {
     <Section
       id="about"
       eyebrow="About"
-      title="A finance professional, quietly building."
-      intro="A short introduction to my journey, my work, and what I'm building towards."
+      title="A note on the work."
+      intro="Where I come from, what I do, and how I approach it."
     >
       <div className="grid gap-5 sm:grid-cols-2">
         {blocks.map((b, i) => (

@@ -4,27 +4,25 @@ import { motion } from "framer-motion";
 const items = [
   {
     role: "Assistant Manager",
-    company: "DSP Asset Managers",
+    company: "DSP Mutual Fund",
     period: "Present",
     location: "Nagpur, India",
     points: [
-      "Manage distributor relationships across the region — supporting IFAs and partner firms with product queries, servicing, and day-to-day engagement.",
-      "Position mutual fund and investment products with advisors through fund updates, portfolio commentary, and category-level conversations.",
-      "Drive business development by identifying growth opportunities within the existing advisor network and onboarding new partners.",
-      "Communicate market developments and fund performance clearly, so advisors can guide their clients with confidence.",
-      "Own client servicing at a partner level — resolving operational queries end-to-end and ensuring a smooth investor experience.",
+      "Manage distributor and advisor relationships across the region.",
+      "Position equity and debt mutual fund products through fund updates and category-level conversations.",
+      "Identify growth opportunities within the existing partner network and onboard new distributors.",
+      "Support partners on servicing queries and day-to-day operational issues.",
     ],
   },
   {
     role: "Finance Intern",
-    company: "Central Coalfields Limited (CCL)",
+    company: "Central Coalfields Limited",
     period: "Summer Internship",
     location: "Ranchi, India",
     points: [
-      "Studied the organisation's cost structure across key operational heads and identified areas worth reviewing.",
-      "Worked on budget review and variance analysis, comparing planned vs. actual spend across departments.",
-      "Assisted with internal financial reporting workflows and understood how figures flowed from source to statement.",
-      "Presented the final findings and recommendations to the senior finance team at the close of the engagement.",
+      "Reviewed the cost structure across key operational heads.",
+      "Worked on budget vs. actual variance analysis across departments.",
+      "Presented findings and observations to the senior finance team at the close of the internship.",
     ],
   },
 ];
@@ -34,8 +32,8 @@ export function Experience() {
     <Section
       id="experience"
       eyebrow="Experience"
-      title="Where I've worked, and what I've learned."
-      intro="Roles that have shaped how I think about finance, markets, and relationships."
+      title="Roles."
+      intro="Where I've worked, in short."
     >
       <div className="relative">
         <div className="absolute left-4 top-2 bottom-2 w-px bg-border sm:left-6" aria-hidden />
