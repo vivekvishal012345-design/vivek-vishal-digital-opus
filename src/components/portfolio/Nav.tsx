@@ -1,22 +1,26 @@
 import { motion, useScroll, useSpring } from "framer-motion";
 import { Moon, Sun, Menu, X } from "lucide-react";
 import { useEffect, useState } from "react";
+import { Link, useRouterState } from "@tanstack/react-router";
 import { useTheme } from "@/hooks/use-theme";
 
-const links = [
-  { href: "#about", label: "About", id: "about" },
-  { href: "#experience", label: "Experience", id: "experience" },
-  { href: "#education", label: "Education", id: "education" },
-  { href: "#skills", label: "Skills", id: "skills" },
-  { href: "#projects", label: "Projects", id: "projects" },
-  { href: "#contact", label: "Contact", id: "contact" },
-];
+export const navLinks = [
+  { to: "/", label: "Home" },
+  { to: "/work", label: "Work" },
+  { to: "/writing", label: "Writing" },
+  { to: "/library", label: "Library" },
+  { to: "/photography", label: "Photography" },
+  { to: "/projects", label: "Projects" },
+  { to: "/now", label: "Now" },
+  { to: "/principles", label: "Principles" },
+  { to: "/contact", label: "Contact" },
+] as const;
 
 export function Nav() {
   const { theme, toggle, mounted } = useTheme();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [active, setActive] = useState<string>("");
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
   const { scrollYProgress } = useScroll();
   const progress = useSpring(scrollYProgress, { stiffness: 120, damping: 30, mass: 0.2 });
 
@@ -28,30 +32,14 @@ export function Nav() {
   }, []);
 
   useEffect(() => {
-    const sections = links
-      .map((l) => document.getElementById(l.id))
-      .filter((el): el is HTMLElement => !!el);
-    if (!sections.length) return;
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries
-          .filter((e) => e.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-        if (visible) setActive(visible.target.id);
-      },
-      { rootMargin: "-45% 0px -45% 0px", threshold: [0, 0.25, 0.5, 0.75, 1] }
-    );
-    sections.forEach((s) => observer.observe(s));
-    return () => observer.disconnect();
-  }, []);
-
-  // Lock body scroll when mobile menu open
-  useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
     return () => {
       document.body.style.overflow = "";
     };
   }, [open]);
+
+  const isActive = (to: string) =>
+    to === "/" ? pathname === "/" : pathname === to || pathname.startsWith(to + "/");
 
   return (
     <>
@@ -64,9 +52,9 @@ export function Nav() {
           scrolled || open ? "glass border-b border-border" : "bg-transparent"
         }`}
       >
-        <nav className="container-x flex h-16 items-center justify-between">
-          <a
-            href="#top"
+        <nav className="container-x flex h-16 items-center justify-between gap-4">
+          <Link
+            to="/"
             onClick={() => setOpen(false)}
             className="flex items-center gap-2 font-display text-lg tracking-tight"
           >
@@ -74,21 +62,19 @@ export function Nav() {
               V
             </span>
             <span className="hidden sm:inline">Vivek Vishal</span>
-          </a>
-          <div className="hidden items-center gap-1 md:flex">
-            {links.map((l) => {
-              const isActive = active === l.id;
+          </Link>
+          <div className="hidden items-center gap-0.5 lg:flex">
+            {navLinks.map((l) => {
+              const active = isActive(l.to);
               return (
-                <a
-                  key={l.href}
-                  href={l.href}
+                <Link
+                  key={l.to}
+                  to={l.to}
                   className={`relative rounded-full px-3 py-1.5 text-sm transition-colors ${
-                    isActive
-                      ? "text-foreground"
-                      : "text-muted-foreground hover:text-foreground"
+                    active ? "text-foreground" : "text-muted-foreground hover:text-foreground"
                   }`}
                 >
-                  {isActive && (
+                  {active && (
                     <motion.span
                       layoutId="nav-active"
                       className="absolute inset-0 -z-10 rounded-full bg-[color:var(--accent)]"
@@ -96,7 +82,7 @@ export function Nav() {
                     />
                   )}
                   {l.label}
-                </a>
+                </Link>
               );
             })}
           </div>
@@ -114,7 +100,7 @@ export function Nav() {
               onClick={() => setOpen((v) => !v)}
               aria-label={open ? "Close menu" : "Open menu"}
               aria-expanded={open}
-              className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-border transition-all active:scale-95 md:hidden"
+              className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-border transition-all active:scale-95 lg:hidden"
             >
               {open ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
             </button>
@@ -122,13 +108,12 @@ export function Nav() {
         </nav>
       </header>
 
-      {/* Mobile menu overlay */}
       {open && (
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 top-16 z-40 md:hidden"
+          className="fixed inset-0 top-16 z-40 lg:hidden"
         >
           <div className="absolute inset-0 glass border-t border-border" />
           <motion.div
@@ -137,27 +122,30 @@ export function Nav() {
             transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
             className="container-x relative flex flex-col py-4"
           >
-            {links.map((l, i) => {
-              const isActive = active === l.id;
+            {navLinks.map((l, i) => {
+              const active = isActive(l.to);
               return (
-                <motion.a
-                  key={l.href}
-                  href={l.href}
-                  onClick={() => setOpen(false)}
+                <motion.div
+                  key={l.to}
                   initial={{ opacity: 0, x: -8 }}
                   animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: i * 0.04 }}
-                  className={`flex items-center justify-between rounded-lg px-3 py-3 text-base transition-colors ${
-                    isActive
-                      ? "bg-[color:var(--accent)] text-foreground"
-                      : "text-muted-foreground hover:bg-[color:var(--accent)]/60 hover:text-foreground"
-                  }`}
+                  transition={{ delay: i * 0.03 }}
                 >
-                  {l.label}
-                  {isActive && (
-                    <span className="h-1.5 w-1.5 rounded-full bg-[color:var(--royal)]" />
-                  )}
-                </motion.a>
+                  <Link
+                    to={l.to}
+                    onClick={() => setOpen(false)}
+                    className={`flex items-center justify-between rounded-lg px-3 py-3 text-base transition-colors ${
+                      active
+                        ? "bg-[color:var(--accent)] text-foreground"
+                        : "text-muted-foreground hover:bg-[color:var(--accent)]/60 hover:text-foreground"
+                    }`}
+                  >
+                    {l.label}
+                    {active && (
+                      <span className="h-1.5 w-1.5 rounded-full bg-[color:var(--royal)]" />
+                    )}
+                  </Link>
+                </motion.div>
               );
             })}
           </motion.div>
