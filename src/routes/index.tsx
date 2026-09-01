@@ -99,7 +99,7 @@ function Home() {
   return (
     <SiteChrome>
       {/* Hero */}
-      <section className="relative overflow-hidden pt-36 pb-20 sm:pt-44 sm:pb-28">
+      <section className="relative overflow-hidden pt-36 pb-16 sm:pt-44 sm:pb-20">
         <div className="pointer-events-none absolute inset-0 -z-10">
           <div className="absolute left-1/2 top-0 h-[520px] w-[900px] -translate-x-1/2 rounded-full bg-[color:var(--royal)] opacity-[0.10] blur-[130px]" />
           <div
@@ -160,6 +160,25 @@ function Home() {
               <MapPin className="h-3.5 w-3.5" /> Nagpur, India
             </span>
           </motion.div>
+        </div>
+      </section>
+
+      {/* Currently */}
+      <section className="pb-4">
+        <div className="container-x">
+          <div className="grid gap-6 border-y border-border py-8 sm:grid-cols-[10rem_minmax(0,1fr)] sm:gap-8 sm:py-10">
+            <span className="text-xs font-medium uppercase tracking-[0.18em] text-[color:var(--royal)]">
+              Currently
+            </span>
+            <p className="max-w-2xl text-base leading-relaxed text-foreground/85">
+              Working with distributors and advisors for DSP Mutual Fund out of Nagpur, and
+              starting the first pieces of writing for this site.{" "}
+              <Link to="/now" className="text-foreground underline decoration-border underline-offset-4 transition-colors hover:text-[color:var(--royal)] hover:decoration-[color:var(--royal)]">
+                More on the Now page
+              </Link>
+              .
+            </p>
+          </div>
         </div>
       </section>
 
