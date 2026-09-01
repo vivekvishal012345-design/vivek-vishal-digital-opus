@@ -20,8 +20,10 @@ export const Route = createFileRoute("/projects")({
           "Personal projects — this site, upcoming YouTube work, and small tools.",
       },
       { property: "og:type", content: "website" },
+      { property: "og:url", content: "https://vivek-vishal-digital-opus.lovable.app/projects" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
-    links: [{ rel: "canonical", href: "/projects" }],
+    links: [{ rel: "canonical", href: "https://vivek-vishal-digital-opus.lovable.app/projects" }],
   }),
   component: ProjectsPage,
 });

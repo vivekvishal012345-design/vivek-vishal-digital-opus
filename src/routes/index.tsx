@@ -62,7 +62,7 @@ export const Route = createFileRoute("/")({
           "A personal site for writing, work, library, photography, and projects — from Vivek Vishal, based in Nagpur, India.",
       },
       { property: "og:type", content: "website" },
-      { property: "og:url", content: "/" },
+      { property: "og:url", content: "https://vivek-vishal-digital-opus.lovable.app/" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: "Vivek Vishal" },
       {
@@ -71,7 +71,7 @@ export const Route = createFileRoute("/")({
           "Writing, work, and a long-form personal site by Vivek Vishal.",
       },
     ],
-    links: [{ rel: "canonical", href: "/" }],
+    links: [{ rel: "canonical", href: "https://vivek-vishal-digital-opus.lovable.app/" }],
     scripts: [
       {
         type: "application/ld+json",
@@ -83,6 +83,7 @@ export const Route = createFileRoute("/")({
           worksFor: { "@type": "Organization", name: "DSP Mutual Fund" },
           address: { "@type": "PostalAddress", addressLocality: "Nagpur", addressCountry: "IN" },
           email: "hello@vivekvishal.com",
+          url: "https://vivek-vishal-digital-opus.lovable.app/",
           alumniOf: [
             { "@type": "CollegeOrUniversity", name: "Sarala Birla University" },
             { "@type": "CollegeOrUniversity", name: "Ranchi University" },
