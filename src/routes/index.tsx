@@ -208,7 +208,7 @@ function Home() {
               >
                 <Link
                   to={s.to}
-                  className="group grid grid-cols-[minmax(0,1fr)_auto] items-baseline gap-6 py-6 transition-colors sm:grid-cols-[10rem_minmax(0,1fr)_auto] sm:py-7"
+                  className="group grid grid-cols-[minmax(0,1fr)_auto] items-baseline gap-6 py-6 transition-colors sm:grid-cols-[13rem_minmax(0,1fr)_auto] sm:py-7"
                 >
                   <span className="font-display text-2xl font-medium tracking-tight text-foreground transition-colors group-hover:text-[color:var(--royal)] sm:text-3xl">
                     {s.label}
