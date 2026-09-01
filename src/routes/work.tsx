@@ -21,8 +21,10 @@ export const Route = createFileRoute("/work")({
           "Experience, education, certifications, and skills — the professional side of the site.",
       },
       { property: "og:type", content: "website" },
+      { property: "og:url", content: "https://vivek-vishal-digital-opus.lovable.app/work" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
-    links: [{ rel: "canonical", href: "/work" }],
+    links: [{ rel: "canonical", href: "https://vivek-vishal-digital-opus.lovable.app/work" }],
   }),
   component: WorkPage,
 });

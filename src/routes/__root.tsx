@@ -79,11 +79,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Vivek Vishal — MBA (Finance) · Assistant Manager, DSP Asset Managers" },
+      { title: "Vivek Vishal" },
       {
         name: "description",
         content:
-          "Personal portfolio of Vivek Vishal — MBA (Finance), Assistant Manager at DSP Asset Managers.",
+          "The personal site of Vivek Vishal — writing, work, library, photography, and projects.",
       },
       { name: "author", content: "Vivek Vishal" },
       { property: "og:site_name", content: "Vivek Vishal" },
@@ -116,7 +116,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 
 function RootShell({ children }: { children: ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" className="dark" style={{ colorScheme: "dark" }} suppressHydrationWarning>
       <head>
         <HeadContent />
       </head>

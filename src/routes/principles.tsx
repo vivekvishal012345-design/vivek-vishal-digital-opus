@@ -58,8 +58,10 @@ export const Route = createFileRoute("/principles")({
           "A short set of principles on how I try to think, work, and hold opinions.",
       },
       { property: "og:type", content: "website" },
+      { property: "og:url", content: "https://vivek-vishal-digital-opus.lovable.app/principles" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
-    links: [{ rel: "canonical", href: "/principles" }],
+    links: [{ rel: "canonical", href: "https://vivek-vishal-digital-opus.lovable.app/principles" }],
   }),
   component: PrinciplesPage,
 });

@@ -1,5 +1,5 @@
 import { Section } from "./Section";
-import { Mail, Linkedin, MapPin, Send, FileDown, Copy, Check } from "lucide-react";
+import { Mail, Linkedin, MapPin, Send, Copy, Check } from "lucide-react";
 import { useState, type FormEvent } from "react";
 import { motion } from "framer-motion";
 import { toast } from "sonner";
@@ -7,7 +7,6 @@ import { toast } from "sonner";
 
 const EMAIL = "hello@vivekvishal.com";
 const LINKEDIN = "https://www.linkedin.com/in/vivekvishal";
-const RESUME = "/resume.pdf";
 
 export function Contact() {
   const [sent, setSent] = useState(false);
@@ -44,7 +43,7 @@ export function Contact() {
       id="contact"
       eyebrow="Contact"
       title="Get in touch."
-      intro="For opportunities, referrals, or a conversation about markets."
+      intro="Email is the most reliable way to reach me."
     >
       <div className="grid gap-8 lg:grid-cols-[1fr_1.2fr]">
         <div className="space-y-4">
@@ -83,20 +82,7 @@ export function Contact() {
             </div>
             <div>
               <p className="text-xs uppercase tracking-widest text-muted-foreground">LinkedIn</p>
-              <p className="text-sm font-medium">Connect with me</p>
-            </div>
-          </a>
-          <a
-            href={RESUME}
-            download
-            className="card-elevated card-elevated-hover flex items-center gap-4 p-5"
-          >
-            <div className="grid h-11 w-11 place-items-center rounded-lg bg-[color:var(--royal)]/12 text-[color:var(--royal)]">
-              <FileDown className="h-5 w-5" />
-            </div>
-            <div>
-              <p className="text-xs uppercase tracking-widest text-muted-foreground">Resume</p>
-              <p className="text-sm font-medium">Download PDF</p>
+              <p className="text-sm font-medium">/in/vivekvishal</p>
             </div>
           </a>
           <div className="card-elevated flex items-center gap-4 p-5">

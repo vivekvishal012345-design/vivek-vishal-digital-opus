@@ -62,7 +62,7 @@ export const Route = createFileRoute("/")({
           "A personal site for writing, work, library, photography, and projects — from Vivek Vishal, based in Nagpur, India.",
       },
       { property: "og:type", content: "website" },
-      { property: "og:url", content: "/" },
+      { property: "og:url", content: "https://vivek-vishal-digital-opus.lovable.app/" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: "Vivek Vishal" },
       {
@@ -71,7 +71,7 @@ export const Route = createFileRoute("/")({
           "Writing, work, and a long-form personal site by Vivek Vishal.",
       },
     ],
-    links: [{ rel: "canonical", href: "/" }],
+    links: [{ rel: "canonical", href: "https://vivek-vishal-digital-opus.lovable.app/" }],
     scripts: [
       {
         type: "application/ld+json",
@@ -83,6 +83,7 @@ export const Route = createFileRoute("/")({
           worksFor: { "@type": "Organization", name: "DSP Mutual Fund" },
           address: { "@type": "PostalAddress", addressLocality: "Nagpur", addressCountry: "IN" },
           email: "hello@vivekvishal.com",
+          url: "https://vivek-vishal-digital-opus.lovable.app/",
           alumniOf: [
             { "@type": "CollegeOrUniversity", name: "Sarala Birla University" },
             { "@type": "CollegeOrUniversity", name: "Ranchi University" },
@@ -98,7 +99,7 @@ function Home() {
   return (
     <SiteChrome>
       {/* Hero */}
-      <section className="relative overflow-hidden pt-36 pb-20 sm:pt-44 sm:pb-28">
+      <section className="relative overflow-hidden pt-36 pb-16 sm:pt-44 sm:pb-20">
         <div className="pointer-events-none absolute inset-0 -z-10">
           <div className="absolute left-1/2 top-0 h-[520px] w-[900px] -translate-x-1/2 rounded-full bg-[color:var(--royal)] opacity-[0.10] blur-[130px]" />
           <div
@@ -162,6 +163,25 @@ function Home() {
         </div>
       </section>
 
+      {/* Currently */}
+      <section className="pb-4">
+        <div className="container-x">
+          <div className="grid gap-6 border-y border-border py-8 sm:grid-cols-[10rem_minmax(0,1fr)] sm:gap-8 sm:py-10">
+            <span className="text-xs font-medium uppercase tracking-[0.18em] text-[color:var(--royal)]">
+              Currently
+            </span>
+            <p className="max-w-2xl text-base leading-relaxed text-foreground/85">
+              Working with distributors and advisors for DSP Mutual Fund out of Nagpur, and
+              starting the first pieces of writing for this site.{" "}
+              <Link to="/now" className="text-foreground underline decoration-border underline-offset-4 transition-colors hover:text-[color:var(--royal)] hover:decoration-[color:var(--royal)]">
+                More on the Now page
+              </Link>
+              .
+            </p>
+          </div>
+        </div>
+      </section>
+
       {/* Section index */}
       <section className="pb-24 sm:pb-32">
         <div className="container-x">
@@ -188,7 +208,7 @@ function Home() {
               >
                 <Link
                   to={s.to}
-                  className="group grid grid-cols-[minmax(0,1fr)_auto] items-baseline gap-6 py-6 transition-colors sm:grid-cols-[10rem_minmax(0,1fr)_auto] sm:py-7"
+                  className="group grid grid-cols-[minmax(0,1fr)_auto] items-baseline gap-6 py-6 transition-colors sm:grid-cols-[13rem_minmax(0,1fr)_auto] sm:py-7"
                 >
                   <span className="font-display text-2xl font-medium tracking-tight text-foreground transition-colors group-hover:text-[color:var(--royal)] sm:text-3xl">
                     {s.label}
