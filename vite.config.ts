@@ -5,7 +5,7 @@
 // - nitro disabled: no server runtime is deployed
 // - every route is prerendered to its own <route>/index.html with full head metadata,
 //   so direct navigation and refresh are served as real files
-// - /404 is prerendered to 404.html; GitHub Pages serves it for any unknown URL
+// - /not-found is prerendered to 404.html; GitHub Pages serves it for any unknown URL
 import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 
 const routes = [
@@ -27,7 +27,7 @@ export default defineConfig({
     prerender: { enabled: true, crawlLinks: false, autoSubfolderIndex: true },
     pages: [
       ...routes.map((path) => ({ path, prerender: { enabled: true } })),
-      { path: "/404", prerender: { enabled: true, outputPath: "/404.html" } },
+      { path: "/not-found", prerender: { enabled: true, outputPath: "/404.html" } },
     ],
   },
 });

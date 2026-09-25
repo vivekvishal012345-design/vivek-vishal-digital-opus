@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 
 // Prerendered to 404.html for static hosting (GitHub Pages serves it for unknown URLs).
-export const Route = createFileRoute("/404")({
+export const Route = createFileRoute("/not-found")({
   head: () => ({
     meta: [
       { title: "Page not found — Vivek Vishal" },
