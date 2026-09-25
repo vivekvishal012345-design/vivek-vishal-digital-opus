@@ -19,10 +19,10 @@ export const Route = createFileRoute("/library")({
           "Books worth returning to, with short reflections on why they stay on the shelf.",
       },
       { property: "og:type", content: "website" },
-      { property: "og:url", content: "https://vivek-vishal-digital-opus.lovable.app/library" },
+      { property: "og:url", content: "https://vivekvishal.com/library" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
-    links: [{ rel: "canonical", href: "https://vivek-vishal-digital-opus.lovable.app/library" }],
+    links: [{ rel: "canonical", href: "https://vivekvishal.com/library" }],
   }),
   component: LibraryPage,
 });

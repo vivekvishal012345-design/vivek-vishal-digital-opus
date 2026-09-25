@@ -38,10 +38,10 @@ export const Route = createFileRoute("/now")({
           "A short note on what I'm working on, reading, and learning this season.",
       },
       { property: "og:type", content: "website" },
-      { property: "og:url", content: "https://vivek-vishal-digital-opus.lovable.app/now" },
+      { property: "og:url", content: "https://vivekvishal.com/now" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
-    links: [{ rel: "canonical", href: "https://vivek-vishal-digital-opus.lovable.app/now" }],
+    links: [{ rel: "canonical", href: "https://vivekvishal.com/now" }],
   }),
   component: NowPage,
 });
