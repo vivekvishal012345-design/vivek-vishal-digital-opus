@@ -16,9 +16,9 @@ import { Route as ProjectsRouteImport } from './routes/projects'
 import { Route as PrinciplesRouteImport } from './routes/principles'
 import { Route as PhotographyRouteImport } from './routes/photography'
 import { Route as NowRouteImport } from './routes/now'
+import { Route as NotFoundRouteImport } from './routes/not-found'
 import { Route as LibraryRouteImport } from './routes/library'
 import { Route as ContactRouteImport } from './routes/contact'
-import { Route as R404RouteImport } from './routes/404'
 import { Route as IndexRouteImport } from './routes/index'
 
 const WritingRoute = WritingRouteImport.update({
@@ -56,6 +56,11 @@ const NowRoute = NowRouteImport.update({
   path: '/now',
   getParentRoute: () => rootRouteImport,
 } as any)
+const NotFoundRoute = NotFoundRouteImport.update({
+  id: '/not-found',
+  path: '/not-found',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LibraryRoute = LibraryRouteImport.update({
   id: '/library',
   path: '/library',
@@ -66,11 +71,6 @@ const ContactRoute = ContactRouteImport.update({
   path: '/contact',
   getParentRoute: () => rootRouteImport,
 } as any)
-const R404Route = R404RouteImport.update({
-  id: '/404',
-  path: '/404',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -79,9 +79,9 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/404': typeof R404Route
   '/contact': typeof ContactRoute
   '/library': typeof LibraryRoute
+  '/not-found': typeof NotFoundRoute
   '/now': typeof NowRoute
   '/photography': typeof PhotographyRoute
   '/principles': typeof PrinciplesRoute
@@ -92,9 +92,9 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/404': typeof R404Route
   '/contact': typeof ContactRoute
   '/library': typeof LibraryRoute
+  '/not-found': typeof NotFoundRoute
   '/now': typeof NowRoute
   '/photography': typeof PhotographyRoute
   '/principles': typeof PrinciplesRoute
@@ -106,9 +106,9 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/404': typeof R404Route
   '/contact': typeof ContactRoute
   '/library': typeof LibraryRoute
+  '/not-found': typeof NotFoundRoute
   '/now': typeof NowRoute
   '/photography': typeof PhotographyRoute
   '/principles': typeof PrinciplesRoute
@@ -121,9 +121,9 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/404'
     | '/contact'
     | '/library'
+    | '/not-found'
     | '/now'
     | '/photography'
     | '/principles'
@@ -134,9 +134,9 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/404'
     | '/contact'
     | '/library'
+    | '/not-found'
     | '/now'
     | '/photography'
     | '/principles'
@@ -147,9 +147,9 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
-    | '/404'
     | '/contact'
     | '/library'
+    | '/not-found'
     | '/now'
     | '/photography'
     | '/principles'
@@ -161,9 +161,9 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  R404Route: typeof R404Route
   ContactRoute: typeof ContactRoute
   LibraryRoute: typeof LibraryRoute
+  NotFoundRoute: typeof NotFoundRoute
   NowRoute: typeof NowRoute
   PhotographyRoute: typeof PhotographyRoute
   PrinciplesRoute: typeof PrinciplesRoute
@@ -224,6 +224,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof NowRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/not-found': {
+      id: '/not-found'
+      path: '/not-found'
+      fullPath: '/not-found'
+      preLoaderRoute: typeof NotFoundRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/library': {
       id: '/library'
       path: '/library'
@@ -238,13 +245,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ContactRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/404': {
-      id: '/404'
-      path: '/404'
-      fullPath: '/404'
-      preLoaderRoute: typeof R404RouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/': {
       id: '/'
       path: '/'
@@ -257,9 +257,9 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  R404Route: R404Route,
   ContactRoute: ContactRoute,
   LibraryRoute: LibraryRoute,
+  NotFoundRoute: NotFoundRoute,
   NowRoute: NowRoute,
   PhotographyRoute: PhotographyRoute,
   PrinciplesRoute: PrinciplesRoute,
