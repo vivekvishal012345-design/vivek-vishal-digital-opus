@@ -4,7 +4,7 @@
 // Static build for GitHub Pages:
 // - nitro disabled (no server runtime is deployed)
 // - every route is prerendered to its own index.html (full SEO metadata in HTML)
-// - an SPA shell is emitted as 404.html so unknown/deep URLs still boot the client router
+// - a rendered not-found page is emitted as 404.html for unknown URLs
 import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 
 const routes = [
@@ -23,11 +23,11 @@ const routes = [
 export default defineConfig({
   nitro: false,
   tanstackStart: {
-    spa: {
-      enabled: true,
-      prerender: { outputPath: "/404.html", crawlLinks: false, retryCount: 0 },
-    },
     prerender: { enabled: true, crawlLinks: false, autoSubfolderIndex: true },
-    pages: routes.map((path) => ({ path, prerender: { enabled: true } })),
+    pages: [
+      ...routes.map((path) => ({ path, prerender: { enabled: true } })),
+      // Rendered not-found page; GitHub Pages serves it for any unknown URL.
+      { path: "/404", prerender: { enabled: true, outputPath: "/404.html" } },
+    ],
   },
 });
