@@ -19,10 +19,10 @@ export const Route = createFileRoute("/contact")({
           "For introductions, referrals, or a good conversation about markets.",
       },
       { property: "og:type", content: "website" },
-      { property: "og:url", content: "https://vivek-vishal-digital-opus.lovable.app/contact" },
+      { property: "og:url", content: "https://vivekvishal.com/contact" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
-    links: [{ rel: "canonical", href: "https://vivek-vishal-digital-opus.lovable.app/contact" }],
+    links: [{ rel: "canonical", href: "https://vivekvishal.com/contact" }],
   }),
   component: ContactPage,
 });

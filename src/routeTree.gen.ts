@@ -16,6 +16,7 @@ import { Route as ProjectsRouteImport } from './routes/projects'
 import { Route as PrinciplesRouteImport } from './routes/principles'
 import { Route as PhotographyRouteImport } from './routes/photography'
 import { Route as NowRouteImport } from './routes/now'
+import { Route as NotFoundRouteImport } from './routes/not-found'
 import { Route as LibraryRouteImport } from './routes/library'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as IndexRouteImport } from './routes/index'
@@ -55,6 +56,11 @@ const NowRoute = NowRouteImport.update({
   path: '/now',
   getParentRoute: () => rootRouteImport,
 } as any)
+const NotFoundRoute = NotFoundRouteImport.update({
+  id: '/not-found',
+  path: '/not-found',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LibraryRoute = LibraryRouteImport.update({
   id: '/library',
   path: '/library',
@@ -75,6 +81,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/contact': typeof ContactRoute
   '/library': typeof LibraryRoute
+  '/not-found': typeof NotFoundRoute
   '/now': typeof NowRoute
   '/photography': typeof PhotographyRoute
   '/principles': typeof PrinciplesRoute
@@ -87,6 +94,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/contact': typeof ContactRoute
   '/library': typeof LibraryRoute
+  '/not-found': typeof NotFoundRoute
   '/now': typeof NowRoute
   '/photography': typeof PhotographyRoute
   '/principles': typeof PrinciplesRoute
@@ -100,6 +108,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/contact': typeof ContactRoute
   '/library': typeof LibraryRoute
+  '/not-found': typeof NotFoundRoute
   '/now': typeof NowRoute
   '/photography': typeof PhotographyRoute
   '/principles': typeof PrinciplesRoute
@@ -114,6 +123,7 @@ export interface FileRouteTypes {
     | '/'
     | '/contact'
     | '/library'
+    | '/not-found'
     | '/now'
     | '/photography'
     | '/principles'
@@ -126,6 +136,7 @@ export interface FileRouteTypes {
     | '/'
     | '/contact'
     | '/library'
+    | '/not-found'
     | '/now'
     | '/photography'
     | '/principles'
@@ -138,6 +149,7 @@ export interface FileRouteTypes {
     | '/'
     | '/contact'
     | '/library'
+    | '/not-found'
     | '/now'
     | '/photography'
     | '/principles'
@@ -151,6 +163,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ContactRoute: typeof ContactRoute
   LibraryRoute: typeof LibraryRoute
+  NotFoundRoute: typeof NotFoundRoute
   NowRoute: typeof NowRoute
   PhotographyRoute: typeof PhotographyRoute
   PrinciplesRoute: typeof PrinciplesRoute
@@ -211,6 +224,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof NowRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/not-found': {
+      id: '/not-found'
+      path: '/not-found'
+      fullPath: '/not-found'
+      preLoaderRoute: typeof NotFoundRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/library': {
       id: '/library'
       path: '/library'
@@ -239,6 +259,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ContactRoute: ContactRoute,
   LibraryRoute: LibraryRoute,
+  NotFoundRoute: NotFoundRoute,
   NowRoute: NowRoute,
   PhotographyRoute: PhotographyRoute,
   PrinciplesRoute: PrinciplesRoute,

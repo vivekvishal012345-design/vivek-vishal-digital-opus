@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://vivek-vishal-digital-opus.lovable.app/sitemap.xml
+Sitemap: https://vivekvishal.com/sitemap.xml

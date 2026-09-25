@@ -19,10 +19,10 @@ export const Route = createFileRoute("/writing")({
           "Essays and notes on markets, mutual funds, and things worth thinking about.",
       },
       { property: "og:type", content: "website" },
-      { property: "og:url", content: "https://vivek-vishal-digital-opus.lovable.app/writing" },
+      { property: "og:url", content: "https://vivekvishal.com/writing" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
-    links: [{ rel: "canonical", href: "https://vivek-vishal-digital-opus.lovable.app/writing" }],
+    links: [{ rel: "canonical", href: "https://vivekvishal.com/writing" }],
   }),
   component: WritingPage,
 });

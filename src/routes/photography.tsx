@@ -19,10 +19,10 @@ export const Route = createFileRoute("/photography")({
           "A curated set of photographs — travel, cities, and everyday scenes.",
       },
       { property: "og:type", content: "website" },
-      { property: "og:url", content: "https://vivek-vishal-digital-opus.lovable.app/photography" },
+      { property: "og:url", content: "https://vivekvishal.com/photography" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
-    links: [{ rel: "canonical", href: "https://vivek-vishal-digital-opus.lovable.app/photography" }],
+    links: [{ rel: "canonical", href: "https://vivekvishal.com/photography" }],
   }),
   component: PhotographyPage,
 });
