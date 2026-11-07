@@ -11,6 +11,7 @@ export const navLinks = [
   { to: "/library", label: "Library" },
   { to: "/photography", label: "Photography" },
   { to: "/projects", label: "Projects" },
+  { to: "/markets", label: "Markets" },
   { to: "/now", label: "Now" },
   { to: "/principles", label: "Principles" },
   { to: "/contact", label: "Contact" },

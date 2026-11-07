@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import type {} from "@tanstack/react-start";
+import { reports } from "@/lib/markets/reports";
 
 const BASE_URL = "https://vivekvishal.com";
 
@@ -17,6 +18,13 @@ export const Route = createFileRoute("/sitemap.xml")({
           { path: "/now", priority: "0.6" },
           { path: "/principles", priority: "0.6" },
           { path: "/contact", priority: "0.7" },
+          { path: "/markets", priority: "0.8" },
+          { path: "/markets/opening-bell", priority: "0.7" },
+          { path: "/markets/mid-market-review", priority: "0.6" },
+          { path: "/markets/daily-study", priority: "0.7" },
+          { path: "/markets/risk-monitor", priority: "0.7" },
+          { path: "/markets/archive", priority: "0.6" },
+          ...reports.map((r) => ({ path: `/markets/archive/${r.date}/${r.type}`, priority: "0.5" })),
         ];
         const urls = entries
           .map(

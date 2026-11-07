@@ -17,9 +17,17 @@ import { Route as PrinciplesRouteImport } from './routes/principles'
 import { Route as PhotographyRouteImport } from './routes/photography'
 import { Route as NowRouteImport } from './routes/now'
 import { Route as NotFoundRouteImport } from './routes/not-found'
+import { Route as MarketsRouteImport } from './routes/markets'
 import { Route as LibraryRouteImport } from './routes/library'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as MarketsIndexRouteImport } from './routes/markets.index'
+import { Route as MarketsRiskMonitorRouteImport } from './routes/markets.risk-monitor'
+import { Route as MarketsOpeningBellRouteImport } from './routes/markets.opening-bell'
+import { Route as MarketsMidMarketReviewRouteImport } from './routes/markets.mid-market-review'
+import { Route as MarketsDailyStudyRouteImport } from './routes/markets.daily-study'
+import { Route as MarketsArchiveIndexRouteImport } from './routes/markets.archive.index'
+import { Route as MarketsArchiveDateTypeRouteImport } from './routes/markets.archive.$date.$type'
 
 const WritingRoute = WritingRouteImport.update({
   id: '/writing',
@@ -61,6 +69,11 @@ const NotFoundRoute = NotFoundRouteImport.update({
   path: '/not-found',
   getParentRoute: () => rootRouteImport,
 } as any)
+const MarketsRoute = MarketsRouteImport.update({
+  id: '/markets',
+  path: '/markets',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LibraryRoute = LibraryRouteImport.update({
   id: '/library',
   path: '/library',
@@ -76,11 +89,47 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const MarketsIndexRoute = MarketsIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => MarketsRoute,
+} as any)
+const MarketsRiskMonitorRoute = MarketsRiskMonitorRouteImport.update({
+  id: '/risk-monitor',
+  path: '/risk-monitor',
+  getParentRoute: () => MarketsRoute,
+} as any)
+const MarketsOpeningBellRoute = MarketsOpeningBellRouteImport.update({
+  id: '/opening-bell',
+  path: '/opening-bell',
+  getParentRoute: () => MarketsRoute,
+} as any)
+const MarketsMidMarketReviewRoute = MarketsMidMarketReviewRouteImport.update({
+  id: '/mid-market-review',
+  path: '/mid-market-review',
+  getParentRoute: () => MarketsRoute,
+} as any)
+const MarketsDailyStudyRoute = MarketsDailyStudyRouteImport.update({
+  id: '/daily-study',
+  path: '/daily-study',
+  getParentRoute: () => MarketsRoute,
+} as any)
+const MarketsArchiveIndexRoute = MarketsArchiveIndexRouteImport.update({
+  id: '/archive/',
+  path: '/archive/',
+  getParentRoute: () => MarketsRoute,
+} as any)
+const MarketsArchiveDateTypeRoute = MarketsArchiveDateTypeRouteImport.update({
+  id: '/archive/$date/$type',
+  path: '/archive/$date/$type',
+  getParentRoute: () => MarketsRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/contact': typeof ContactRoute
   '/library': typeof LibraryRoute
+  '/markets': typeof MarketsRouteWithChildren
   '/not-found': typeof NotFoundRoute
   '/now': typeof NowRoute
   '/photography': typeof PhotographyRoute
@@ -89,6 +138,13 @@ export interface FileRoutesByFullPath {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/work': typeof WorkRoute
   '/writing': typeof WritingRoute
+  '/markets/daily-study': typeof MarketsDailyStudyRoute
+  '/markets/mid-market-review': typeof MarketsMidMarketReviewRoute
+  '/markets/opening-bell': typeof MarketsOpeningBellRoute
+  '/markets/risk-monitor': typeof MarketsRiskMonitorRoute
+  '/markets/': typeof MarketsIndexRoute
+  '/markets/archive/': typeof MarketsArchiveIndexRoute
+  '/markets/archive/$date/$type': typeof MarketsArchiveDateTypeRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -102,12 +158,20 @@ export interface FileRoutesByTo {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/work': typeof WorkRoute
   '/writing': typeof WritingRoute
+  '/markets/daily-study': typeof MarketsDailyStudyRoute
+  '/markets/mid-market-review': typeof MarketsMidMarketReviewRoute
+  '/markets/opening-bell': typeof MarketsOpeningBellRoute
+  '/markets/risk-monitor': typeof MarketsRiskMonitorRoute
+  '/markets': typeof MarketsIndexRoute
+  '/markets/archive': typeof MarketsArchiveIndexRoute
+  '/markets/archive/$date/$type': typeof MarketsArchiveDateTypeRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/contact': typeof ContactRoute
   '/library': typeof LibraryRoute
+  '/markets': typeof MarketsRouteWithChildren
   '/not-found': typeof NotFoundRoute
   '/now': typeof NowRoute
   '/photography': typeof PhotographyRoute
@@ -116,6 +180,13 @@ export interface FileRoutesById {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/work': typeof WorkRoute
   '/writing': typeof WritingRoute
+  '/markets/daily-study': typeof MarketsDailyStudyRoute
+  '/markets/mid-market-review': typeof MarketsMidMarketReviewRoute
+  '/markets/opening-bell': typeof MarketsOpeningBellRoute
+  '/markets/risk-monitor': typeof MarketsRiskMonitorRoute
+  '/markets/': typeof MarketsIndexRoute
+  '/markets/archive/': typeof MarketsArchiveIndexRoute
+  '/markets/archive/$date/$type': typeof MarketsArchiveDateTypeRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -123,6 +194,7 @@ export interface FileRouteTypes {
     | '/'
     | '/contact'
     | '/library'
+    | '/markets'
     | '/not-found'
     | '/now'
     | '/photography'
@@ -131,6 +203,13 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/work'
     | '/writing'
+    | '/markets/daily-study'
+    | '/markets/mid-market-review'
+    | '/markets/opening-bell'
+    | '/markets/risk-monitor'
+    | '/markets/'
+    | '/markets/archive/'
+    | '/markets/archive/$date/$type'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -144,11 +223,19 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/work'
     | '/writing'
+    | '/markets/daily-study'
+    | '/markets/mid-market-review'
+    | '/markets/opening-bell'
+    | '/markets/risk-monitor'
+    | '/markets'
+    | '/markets/archive'
+    | '/markets/archive/$date/$type'
   id:
     | '__root__'
     | '/'
     | '/contact'
     | '/library'
+    | '/markets'
     | '/not-found'
     | '/now'
     | '/photography'
@@ -157,12 +244,20 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/work'
     | '/writing'
+    | '/markets/daily-study'
+    | '/markets/mid-market-review'
+    | '/markets/opening-bell'
+    | '/markets/risk-monitor'
+    | '/markets/'
+    | '/markets/archive/'
+    | '/markets/archive/$date/$type'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ContactRoute: typeof ContactRoute
   LibraryRoute: typeof LibraryRoute
+  MarketsRoute: typeof MarketsRouteWithChildren
   NotFoundRoute: typeof NotFoundRoute
   NowRoute: typeof NowRoute
   PhotographyRoute: typeof PhotographyRoute
@@ -231,6 +326,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof NotFoundRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/markets': {
+      id: '/markets'
+      path: '/markets'
+      fullPath: '/markets'
+      preLoaderRoute: typeof MarketsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/library': {
       id: '/library'
       path: '/library'
@@ -252,13 +354,86 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/markets/': {
+      id: '/markets/'
+      path: '/'
+      fullPath: '/markets/'
+      preLoaderRoute: typeof MarketsIndexRouteImport
+      parentRoute: typeof MarketsRoute
+    }
+    '/markets/risk-monitor': {
+      id: '/markets/risk-monitor'
+      path: '/risk-monitor'
+      fullPath: '/markets/risk-monitor'
+      preLoaderRoute: typeof MarketsRiskMonitorRouteImport
+      parentRoute: typeof MarketsRoute
+    }
+    '/markets/opening-bell': {
+      id: '/markets/opening-bell'
+      path: '/opening-bell'
+      fullPath: '/markets/opening-bell'
+      preLoaderRoute: typeof MarketsOpeningBellRouteImport
+      parentRoute: typeof MarketsRoute
+    }
+    '/markets/mid-market-review': {
+      id: '/markets/mid-market-review'
+      path: '/mid-market-review'
+      fullPath: '/markets/mid-market-review'
+      preLoaderRoute: typeof MarketsMidMarketReviewRouteImport
+      parentRoute: typeof MarketsRoute
+    }
+    '/markets/daily-study': {
+      id: '/markets/daily-study'
+      path: '/daily-study'
+      fullPath: '/markets/daily-study'
+      preLoaderRoute: typeof MarketsDailyStudyRouteImport
+      parentRoute: typeof MarketsRoute
+    }
+    '/markets/archive/': {
+      id: '/markets/archive/'
+      path: '/archive'
+      fullPath: '/markets/archive/'
+      preLoaderRoute: typeof MarketsArchiveIndexRouteImport
+      parentRoute: typeof MarketsRoute
+    }
+    '/markets/archive/$date/$type': {
+      id: '/markets/archive/$date/$type'
+      path: '/archive/$date/$type'
+      fullPath: '/markets/archive/$date/$type'
+      preLoaderRoute: typeof MarketsArchiveDateTypeRouteImport
+      parentRoute: typeof MarketsRoute
+    }
   }
 }
+
+interface MarketsRouteChildren {
+  MarketsDailyStudyRoute: typeof MarketsDailyStudyRoute
+  MarketsMidMarketReviewRoute: typeof MarketsMidMarketReviewRoute
+  MarketsOpeningBellRoute: typeof MarketsOpeningBellRoute
+  MarketsRiskMonitorRoute: typeof MarketsRiskMonitorRoute
+  MarketsIndexRoute: typeof MarketsIndexRoute
+  MarketsArchiveIndexRoute: typeof MarketsArchiveIndexRoute
+  MarketsArchiveDateTypeRoute: typeof MarketsArchiveDateTypeRoute
+}
+
+const MarketsRouteChildren: MarketsRouteChildren = {
+  MarketsDailyStudyRoute: MarketsDailyStudyRoute,
+  MarketsMidMarketReviewRoute: MarketsMidMarketReviewRoute,
+  MarketsOpeningBellRoute: MarketsOpeningBellRoute,
+  MarketsRiskMonitorRoute: MarketsRiskMonitorRoute,
+  MarketsIndexRoute: MarketsIndexRoute,
+  MarketsArchiveIndexRoute: MarketsArchiveIndexRoute,
+  MarketsArchiveDateTypeRoute: MarketsArchiveDateTypeRoute,
+}
+
+const MarketsRouteWithChildren =
+  MarketsRoute._addFileChildren(MarketsRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ContactRoute: ContactRoute,
   LibraryRoute: LibraryRoute,
+  MarketsRoute: MarketsRouteWithChildren,
   NotFoundRoute: NotFoundRoute,
   NowRoute: NowRoute,
   PhotographyRoute: PhotographyRoute,
