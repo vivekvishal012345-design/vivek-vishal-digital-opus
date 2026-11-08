@@ -40,7 +40,7 @@ const routes = [
 export default defineConfig({
   nitro: false,
   tanstackStart: {
-    prerender: { enabled: true, crawlLinks: false, autoSubfolderIndex: true },
+    prerender: { enabled: true, crawlLinks: false, autoStaticPathsDiscovery: false, autoSubfolderIndex: true },
     pages: [
       ...routes.map((path) => ({ path, prerender: { enabled: true } })),
       { path: "/not-found", prerender: { enabled: true, outputPath: "/404.html" } },

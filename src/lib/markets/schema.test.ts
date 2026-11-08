@@ -1,5 +1,8 @@
 import { describe, expect, it } from "vitest";
 import { computeChange, reportSchema } from "./schema";
+import { REQUIRED_TOPICS } from "./requirements";
+import { validatePublication } from "./publishing";
+import { REPORT_META } from "./schema";
 
 const base = {
   type: "opening-bell",
@@ -7,9 +10,12 @@ const base = {
   asOf: "2026-11-09T09:45:00+05:30",
   generatedAt: "2026-11-09T09:46:00+05:30",
   conclusion: "Test conclusion.",
-  sources: [{ id: "s1", name: "Exchange", accessedAt: "2026-11-09T09:44:00+05:30" }],
+  session: { status: "open", note: "Calendar checked", calendarSourceId: "s1", checkedAt: "2026-11-09T09:44:00+05:30" },
+  sections: REQUIRED_TOPICS["opening-bell"].map((topic) => ({ topic, kind: "fact", status: "unavailable", title: topic, body: "Not verifiable in this test", asOf: "2026-11-09T09:44:00+05:30", sourceIds: ["s1"] })),
+  scenarios: ["3M", "6M", "12M"].map((horizon) => ({ horizon, subject: "Market", status: "unavailable", confidence: "unavailable", outlook: "Unavailable", alternative: "Unavailable", confirmation: "Unavailable", invalidation: "Unavailable", sourceIds: ["s1"] })),
+  sources: [{ id: "s1", name: "Exchange", url: "https://www.nseindia.com", accessedAt: "2026-11-09T09:44:00+05:30" }],
 };
-const metric = { label: "Index", baseline: 100, latest: 101, status: "confirmed", sourceId: "s1", capturedAt: "2026-11-09T09:44:00+05:30" };
+const metric = { label: "Index", scope: "india-session", baseline: 100, baselineAt: "2026-11-06T15:30:00+05:30", latest: 101, status: "confirmed", sourceId: "s1", capturedAt: "2026-11-09T09:44:00+05:30" };
 
 describe("report schema", () => {
   it("accepts a valid report", () => expect(reportSchema.safeParse({ ...base, metrics: [metric] }).success).toBe(true));
@@ -24,9 +30,43 @@ describe("report schema", () => {
     expect(reportSchema.safeParse({ ...base, asOf: "2026-11-09T09:45:00" }).success).toBe(false));
   it("rejects an unknown report type", () => expect(reportSchema.safeParse({ ...base, type: "weekly" }).success).toBe(false));
   it("accepts an unavailable value with no number", () =>
-    expect(reportSchema.safeParse({ ...base, metrics: [{ ...metric, latest: null, status: "unavailable" }] }).success).toBe(true));
+    expect(reportSchema.safeParse({ ...base, metrics: [{ ...metric, latest: null, status: "unavailable", note: "Source unavailable" }] }).success).toBe(true));
   it("rejects a missing value that is not marked unavailable", () =>
     expect(reportSchema.safeParse({ ...base, metrics: [{ ...metric, latest: null }] }).success).toBe(false));
+});
+
+describe("desk requirements", () => {
+  it("Opening Bell runs at 9:45 AM IST", () => expect(REPORT_META["opening-bell"].schedule).toBe("9:45 AM IST"));
+  it("Daily Study runs at 6:00 PM IST", () => expect(REPORT_META["daily-study"].schedule).toBe("6:00 PM IST"));
+  it("Risk Monitor runs at 7:00 PM IST", () => expect(REPORT_META["risk-monitor"].schedule).toBe("7:00 PM IST"));
+  it("Mid-Market has no fixed automation", () => expect(REPORT_META["mid-market-review"].schedule).toBeNull());
+  it("rejects missing baseline timestamps", () => expect(reportSchema.safeParse({ ...base, metrics: [{ ...metric, baselineAt: null }] }).success).toBe(false));
+  it("rejects missing source links", () => expect(reportSchema.safeParse({ ...base, sources: [{ ...base.sources[0], url: undefined }] }).success).toBe(false));
+  it("requires stale observation explanations", () => expect(reportSchema.safeParse({ ...base, metrics: [{ ...metric, status: "stale" }] }).success).toBe(false));
+  it("accepts explicitly explained stale observations", () => expect(reportSchema.safeParse({ ...base, metrics: [{ ...metric, status: "stale", note: "Last verified session" }] }).success).toBe(true));
+  it("rejects fabricated values labelled unavailable", () => expect(reportSchema.safeParse({ ...base, metrics: [{ ...metric, status: "unavailable", note: "Unavailable" }] }).success).toBe(false));
+  it("requires calendar evidence", () => expect(reportSchema.safeParse({ ...base, session: { ...base.session, calendarSourceId: "missing" } }).success).toBe(false));
+  it("rejects a weekend marked open", () => expect(reportSchema.safeParse({ ...base, date: "2026-11-08", asOf: "2026-11-08T09:45:00+05:30" }).success).toBe(false));
+  it("accepts a sourced holiday note without Indian prices", () => expect(reportSchema.safeParse({ ...base, session: { ...base.session, status: "closed", note: "Holiday per calendar" }, sections: [], scenarios: [] }).success).toBe(true));
+  it("rejects Indian session prices on no-session days", () => expect(reportSchema.safeParse({ ...base, session: { ...base.session, status: "closed" }, metrics: [metric] }).success).toBe(false));
+  for (const [type, topics] of Object.entries(REQUIRED_TOPICS)) {
+    it(`${type} requires every coverage topic`, () => {
+      const sections = topics.map((topic) => ({ ...base.sections[0], topic }));
+      expect(reportSchema.safeParse({ ...base, type, sections }).success).toBe(true);
+      for (const topic of topics) expect(reportSchema.safeParse({ ...base, type, sections: sections.filter((s) => s.topic !== topic) }).success).toBe(false);
+    });
+  }
+  for (const horizon of ["3M", "6M", "12M"]) it(`requires ${horizon} scenarios`, () => expect(reportSchema.safeParse({ ...base, scenarios: base.scenarios.filter((s) => s.horizon !== horizon) }).success).toBe(false));
+  it("Risk Monitor excludes company attribution", () => expect(reportSchema.safeParse({ ...base, type: "risk-monitor", sections: [...REQUIRED_TOPICS["risk-monitor"].map((topic) => ({ ...base.sections[0], topic })), { ...base.sections[0], topic: "attribution" }] }).success).toBe(false));
+});
+
+describe("safe publication", () => {
+  it("refuses silent overwrites", () => expect(() => validatePublication(base, base)).toThrow("append one revision"));
+  it("accepts explicit advancing corrections", () => expect(validatePublication({ ...base, generatedAt: "2026-11-09T10:00:00+05:30", revisions: [{ at: "2026-11-09T10:00:00+05:30", note: "Corrected source" }] }, base).revisions).toHaveLength(1));
+  it("preserves prior revision entries", () => {
+    const previous = { ...base, revisions: [{ at: "2026-11-09T09:46:00+05:30", note: "First correction" }] };
+    expect(() => validatePublication({ ...base, generatedAt: "2026-11-09T10:00:00+05:30", revisions: [{ at: "2026-11-09T09:46:00+05:30", note: "Changed history" }, { at: "2026-11-09T10:00:00+05:30", note: "Second correction" }] }, previous)).toThrow("preserve revision history");
+  });
 });
 
 describe("computeChange", () => {

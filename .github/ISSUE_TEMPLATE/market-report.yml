@@ -1,0 +1,12 @@
+name: Market report
+description: Save a sourced report for review from your phone. Repository write permission required.
+title: '[Market report] '
+body:
+  - type: textarea
+    id: report
+    attributes:
+      label: Report JSON
+      description: Paste the complete JSON object. New reports only; use Actions for explicit corrections.
+      render: json
+    validations:
+      required: true

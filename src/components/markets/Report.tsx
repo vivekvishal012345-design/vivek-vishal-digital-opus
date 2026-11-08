@@ -48,15 +48,15 @@ export function MetricsTable({ report }: { report: Report }) {
                     <StatusBadge status={m.status} />
                   </div>
                   <div className="mt-1 text-xs text-muted-foreground">
-                    {m.baselineLabel && <>Baseline: {m.baselineLabel} · </>}
+                    {m.baselineAt && <>Baseline: {m.baselineLabel ?? "previous observation"} · {formatIST(m.baselineAt)} · </>}
                     <a href={`#src-${src.get(m.sourceId)}`} className="underline-offset-2 hover:underline">
                       [{src.get(m.sourceId)}]
                     </a>{" "}
-                    {formatIST(m.capturedAt, false)}
+                    {formatIST(m.capturedAt)}
                     {m.note && <> · {m.note}</>}
                   </div>
                 </td>
-                <td className="py-3 pr-4 text-right text-muted-foreground">{m.baseline === null ? "—" : nf(m.baseline) + u}</td>
+                <td className="py-3 pr-4 text-right text-muted-foreground">{m.baseline === null ? "Unavailable" : nf(m.baseline) + u}</td>
                 <td className="py-3 pr-4 text-right">{m.latest === null ? <span className="text-muted-foreground">Unavailable</span> : nf(m.latest) + u}</td>
                 <td className="py-3 pr-4 text-right">{c.pts === null ? "—" : <Dir value={c.pts}>{signed(c.pts)}</Dir>}</td>
                 <td className="py-3 text-right">
@@ -86,7 +86,7 @@ export function ReportView({ report }: { report: Report }) {
     <article className="mx-auto max-w-3xl">
       <header className="border-b border-border pb-6">
         <div className="text-xs font-medium uppercase tracking-[0.18em] text-[color:var(--royal)]">{meta.title}</div>
-        <h2 className="mt-3 font-display text-3xl font-medium tracking-tight sm:text-4xl">{report.title ?? formatDate(report.date)}</h2>
+        <h1 className="mt-3 font-display text-3xl font-medium sm:text-4xl">{report.title ?? formatDate(report.date)}</h1>
         <dl className="tabular mt-4 flex flex-wrap gap-x-6 gap-y-1 text-xs text-muted-foreground">
           <div><dt className="inline">Data as of </dt><dd className="inline text-foreground/85">{formatIST(report.asOf)}</dd></div>
           <div><dt className="inline">Generated </dt><dd className="inline">{formatIST(report.generatedAt)}</dd></div>
@@ -97,6 +97,10 @@ export function ReportView({ report }: { report: Report }) {
       <section className="py-8">
         <h3 className="mb-3 text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground">Conclusion</h3>
         <p className="whitespace-pre-line text-lg leading-relaxed text-foreground sm:text-xl">{report.conclusion}</p>
+        <p className="mt-4 border-l-2 border-border pl-4 text-sm leading-relaxed text-muted-foreground">
+          {report.session.status === "closed" ? "No Indian market session. " : "Session note: "}{report.session.note}{" "}
+          <a href={`#src-${src.get(report.session.calendarSourceId)}`} className="underline">Calendar [{src.get(report.session.calendarSourceId)}]</a> · checked {formatIST(report.session.checkedAt)}
+        </p>
       </section>
 
       {report.metrics.length > 0 && (
@@ -114,19 +118,32 @@ export function ReportView({ report }: { report: Report }) {
                 <span className="flex flex-wrap items-center gap-3">
                   <span className="w-28 shrink-0 text-[10px] font-medium uppercase tracking-[0.14em] text-muted-foreground">{KIND_LABEL[s.kind]}</span>
                   <span className="text-foreground">{s.title}</span>
+                  <StatusBadge status={s.status} />
                 </span>
                 <ChevronDown className="h-4 w-4 shrink-0 text-muted-foreground transition-transform group-open:rotate-180" />
               </summary>
               <div className="pb-5 sm:pl-[7.75rem]">
                 <p className="whitespace-pre-line leading-relaxed text-foreground/85">{s.body}</p>
+                <p className="tabular mt-2 text-xs text-muted-foreground">As of {formatIST(s.asOf)}</p>
                 {s.sourceIds?.length ? (
-                  <p className="mt-2 text-xs text-muted-foreground">Sources: {s.sourceIds.map((id) => `[${src.get(id)}]`).join(" ")}</p>
+                  <p className="mt-2 flex flex-wrap gap-2 text-xs text-muted-foreground">Sources: {s.sourceIds.map((id) => <a key={id} href={`#src-${src.get(id)}`} className="underline">[{src.get(id)}]</a>)}</p>
                 ) : null}
               </div>
             </details>
           ))}
         </section>
       )}
+
+      {report.scenarios.length > 0 && <section className="mt-8 border-t border-border">
+        <h2 className="py-4 text-xs font-medium uppercase text-muted-foreground">Conditional outlook · estimates, not predictions</h2>
+        {report.scenarios.map((s, i) => <details key={i} className="group border-b border-border">
+          <summary className="flex cursor-pointer items-center justify-between gap-4 py-4"><span>{s.horizon} · {s.subject} <StatusBadge status={s.status} /></span><ChevronDown className="h-4 w-4 shrink-0 group-open:rotate-180" /></summary>
+          <dl className="space-y-3 pb-5 text-sm leading-relaxed">
+            {[["Outlook", s.outlook], ["Confidence", s.confidence], ["Alternative", s.alternative], ["Confirmation", s.confirmation], ["Invalidation", s.invalidation]].map(([label, value]) => <div key={label}><dt className="text-muted-foreground">{label}</dt><dd className="whitespace-pre-line">{value}</dd></div>)}
+            <div><dt className="text-muted-foreground">Sources</dt><dd className="flex gap-2">{s.sourceIds.map((id) => <a key={id} href={`#src-${src.get(id)}`} className="underline">[{src.get(id)}]</a>)}</dd></div>
+          </dl>
+        </details>)}
+      </section>}
 
       <section className="pt-8">
         <h3 className="mb-3 text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground">Sources</h3>
@@ -156,7 +173,8 @@ export function EmptyReport({ type }: { type: ReportType }) {
   const meta = REPORT_META[type];
   return (
     <div className="mx-auto max-w-3xl border-y border-border py-12 text-center">
-      <p className="text-foreground">No {meta.title} published yet.</p>
+      <h1 className="mb-4 font-display text-2xl">{meta.title}</h1>
+      <p className="text-foreground">No report published yet.</p>
       <p className="mt-2 text-sm text-muted-foreground">
         {meta.schedule ? `Scheduled for ${meta.schedule} on trading days.` : "Published on an intraday basis when warranted."}
       </p>

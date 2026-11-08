@@ -512,3 +512,7 @@ cd <repository-name>
 npm i
 npm run dev
 ```
+
+## Markets Desk
+
+Markets lives inside this site at `/markets`; the existing domain and GitHub Pages workflow are unchanged. See [report requirements and publishing instructions](docs/markets.md).

@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { REQUIRED_TOPICS } from "./requirements";
 
 export const REPORT_TYPES = [
   "opening-bell",
@@ -41,16 +42,19 @@ export const REPORT_META: Record<
 /** ISO 8601 timestamp with an explicit offset, e.g. 2026-11-09T09:45:00+05:30 */
 const timestamp = z
   .string()
-  .regex(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(:\d{2})?(\.\d+)?(Z|[+-]\d{2}:\d{2})$/, "timestamp must be ISO 8601 with offset");
+  .regex(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(:\d{2})?(\.\d+)?(Z|[+-]\d{2}:\d{2})$/, "timestamp must be ISO 8601 with offset")
+  .refine((value) => Number.isFinite(Date.parse(value)), "invalid timestamp");
 
-export const metricStatus = z.enum(["confirmed", "provisional", "estimate", "unavailable"]);
+export const metricStatus = z.enum(["confirmed", "provisional", "estimate", "stale", "unavailable"]);
 
 export const metricSchema = z
   .object({
     label: z.string().min(1),
+    scope: z.enum(["india-session", "global", "historical"]),
     unit: z.string().optional(),
     baseline: z.number().nullable(),
     baselineLabel: z.string().optional(),
+    baselineAt: timestamp.nullable(),
     latest: z.number().nullable(),
     /** Optional overrides; otherwise derived from baseline/latest. */
     changeBps: z.number().nullable().optional(),
@@ -58,26 +62,44 @@ export const metricSchema = z
     sourceId: z.string().min(1),
     capturedAt: timestamp,
     note: z.string().optional(),
-  })
+  }).strict()
   .superRefine((m, ctx) => {
     if (m.status !== "unavailable" && m.latest === null) {
       ctx.addIssue({ code: "custom", message: `"${m.label}": latest is null but status is ${m.status}; use "unavailable"` });
     }
+    if (m.status === "unavailable" && m.latest !== null) ctx.addIssue({ code: "custom", message: "unavailable observation must not contain a latest number" });
+    if (m.baseline !== null && m.baselineAt === null) ctx.addIssue({ code: "custom", message: "numeric baseline requires baselineAt" });
+    if (["stale", "unavailable", "provisional", "estimate"].includes(m.status) && !m.note) ctx.addIssue({ code: "custom", message: "non-confirmed observation requires an explanatory note" });
   });
 
 export const sectionSchema = z.object({
   kind: z.enum(["fact", "estimate", "interpretation"]),
+  topic: z.string().min(1),
+  status: metricStatus,
+  asOf: timestamp,
   title: z.string().min(1),
   body: z.string().min(1),
-  sourceIds: z.array(z.string()).optional(),
-});
+  sourceIds: z.array(z.string().min(1)).min(1),
+}).strict();
 
 export const sourceSchema = z.object({
   id: z.string().min(1),
   name: z.string().min(1),
-  url: z.string().url().optional(),
+  url: z.string().url().refine((url) => url.startsWith("https://"), "source must use HTTPS"),
   accessedAt: timestamp,
-});
+}).strict();
+
+export const scenarioSchema = z.object({
+  horizon: z.enum(["3M", "6M", "12M"]),
+  subject: z.string().min(1),
+  status: z.enum(["estimate", "unavailable"]),
+  outlook: z.string().min(1),
+  confidence: z.enum(["low", "medium", "high", "unavailable"]),
+  alternative: z.string().min(1),
+  confirmation: z.string().min(1),
+  invalidation: z.string().min(1),
+  sourceIds: z.array(z.string().min(1)).min(1),
+}).strict();
 
 export const reportSchema = z
   .object({
@@ -87,15 +109,37 @@ export const reportSchema = z
     asOf: timestamp,
     generatedAt: timestamp,
     provisional: z.boolean().default(false),
+    session: z.object({
+      status: z.enum(["open", "closed"]),
+      note: z.string().min(1),
+      calendarSourceId: z.string().min(1),
+      checkedAt: timestamp,
+    }).strict(),
     conclusion: z.string().min(1),
     metrics: z.array(metricSchema).default([]),
     sections: z.array(sectionSchema).default([]),
     sources: z.array(sourceSchema).min(1, "at least one source is required"),
+    scenarios: z.array(scenarioSchema).default([]),
     revisions: z.array(z.object({ at: timestamp, note: z.string().min(1) })).default([]),
-  })
+  }).strict()
   .superRefine((r, ctx) => {
     const ids = new Set(r.sources.map((s) => s.id));
+    if (ids.size !== r.sources.length) ctx.addIssue({ code: "custom", message: "source IDs must be unique" });
+    if (!ids.has(r.session.calendarSourceId)) ctx.addIssue({ code: "custom", message: "calendar source must be cited" });
+    const day = new Date(`${r.date}T00:00:00Z`).getUTCDay();
+    if ((day === 0 || day === 6) && r.session.status === "open") ctx.addIssue({ code: "custom", message: "weekend requires a no-session note" });
+    if (new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Kolkata", year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date(r.asOf)) !== r.date) ctx.addIssue({ code: "custom", message: "asOf IST date must match report date" });
+    if (r.session.status === "open") {
+      for (const topic of REQUIRED_TOPICS[r.type]) {
+        if (!r.sections.some((s) => s.topic === topic)) ctx.addIssue({ code: "custom", message: `missing required coverage: ${topic}; explicitly mark unavailable when not verifiable` });
+      }
+      if (r.type !== "mid-market-review") for (const horizon of ["3M", "6M", "12M"] as const) {
+        if (!r.scenarios.some((s) => s.horizon === horizon)) ctx.addIssue({ code: "custom", message: `missing ${horizon} conditional scenario` });
+      }
+    }
+    if (r.type === "risk-monitor" && r.sections.some((s) => ["attribution", "company-deep-dive"].includes(s.topic))) ctx.addIssue({ code: "custom", message: "Risk Monitor must not duplicate stock attribution or company deep dive" });
     r.metrics.forEach((m) => {
+      if (r.session.status === "closed" && m.scope === "india-session" && m.latest !== null) ctx.addIssue({ code: "custom", message: "no-session report cannot present Indian session prices" });
       if (!ids.has(m.sourceId)) ctx.addIssue({ code: "custom", message: `metric "${m.label}" cites unknown source "${m.sourceId}"` });
     });
     r.sections.forEach((s) =>
@@ -103,6 +147,9 @@ export const reportSchema = z
         if (!ids.has(id)) ctx.addIssue({ code: "custom", message: `section "${s.title}" cites unknown source "${id}"` });
       }),
     );
+    r.scenarios.forEach((s) => s.sourceIds.forEach((id) => {
+      if (!ids.has(id)) ctx.addIssue({ code: "custom", message: `scenario cites unknown source ${id}` });
+    }));
   });
 
 export type Report = z.infer<typeof reportSchema>;

@@ -11,7 +11,7 @@ export const Route = createFileRoute("/markets/archive/$date/$type")({
     return { date: report.date, type: report.type };
   },
   head: ({ loaderData, params }) => {
-    if (!loaderData) return { meta: [{ title: "Report unavailable — Vivek Vishal" }, { name: "robots", content: "noindex" }] };
+    if (!loaderData) return { ...marketsHead("/markets/archive", "Report unavailable — Vivek Vishal", "The requested Markets Desk report is unavailable."), meta: [...marketsHead("/markets/archive", "Report unavailable — Vivek Vishal", "The requested Markets Desk report is unavailable.").meta, { name: "robots", content: "noindex" }] };
     const title = `${REPORT_META[loaderData.type].title}, ${formatDate(loaderData.date)} — Vivek Vishal`;
     return marketsHead(`/markets/archive/${params.date}/${params.type}`, title, `${REPORT_META[loaderData.type].title} for ${formatDate(loaderData.date)}. Timestamped and sourced.`);
   },
@@ -25,6 +25,7 @@ export const Route = createFileRoute("/markets/archive/$date/$type")({
 
 function ArchivedReport() {
   const { date, type } = Route.useLoaderData();
-  const report = findReport(date, type)!;
+  const report = findReport(date, type);
+  if (!report) throw notFound();
   return <ReportView report={report} />;
 }

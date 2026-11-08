@@ -9,6 +9,8 @@ export const Route = createFileRoute("/not-found")({
       { property: "og:title", content: "Page not found — Vivek Vishal" },
       { property: "og:description", content: "The page you're looking for doesn't exist or has been moved." },
       { name: "robots", content: "noindex" },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   component: NotFoundPage,

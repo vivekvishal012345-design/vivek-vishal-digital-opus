@@ -4,7 +4,7 @@
 - Site is a static build: every page is pre-rendered to its own HTML file and deployed by `.github/workflows/deploy.yml` on every push to `main`. `public/CNAME` = vivekvishal.com. No database, no server at runtime.
 - Pages share `SiteChrome` (nav + footer), `PageHeader`, and the dark editorial theme in `src/styles.css`.
 - The list of pre-rendered pages is hard-coded in `vite.config.ts`; the sitemap is hard-coded in `src/routes/sitemap[.]xml.ts`.
-- The full written specs for the three reports are not in this conversation. I'll build the layout around the rules below and fit the exact sections to your specs when you paste them (or I'll pull them from earlier chat if they exist).
+- The full report requirements are supplied: Opening Bell, Daily Indian Market Study and Cross-Asset Risk Monitor cover the specified observations, history, conditional scenarios and sources; Mid-Market Review is unscheduled.
 
 Nothing existing is removed: domain, workflow, the nine pages and their content all stay as they are.
 

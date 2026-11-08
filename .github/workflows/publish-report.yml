@@ -1,0 +1,95 @@
+name: Publish market report
+
+on:
+  workflow_dispatch:
+    inputs:
+      report_json:
+        description: 'Paste the complete validated report JSON'
+        required: true
+        type: string
+      correction:
+        description: 'Replace an existing report with an explicit appended revision'
+        type: boolean
+        default: false
+      deploy:
+        description: 'Deploy to vivekvishal.com after saving (leave off for preview/review)'
+        type: boolean
+        default: false
+  issues:
+    types: [opened]
+
+permissions:
+  contents: write
+  issues: write
+  actions: write
+
+concurrency:
+  group: market-publication
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    if: github.ref == 'refs/heads/main' && (github.event_name == 'workflow_dispatch' || startsWith(github.event.issue.title, '[Market report]'))
+    runs-on: ubuntu-latest
+    steps:
+      - name: Authorize repository collaborator
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          ACTOR: ${{ github.actor }}
+        run: |
+          permission=$(gh api "repos/$REPO/collaborators/$ACTOR/permission" --jq '.permission')
+          case "$permission" in admin|maintain|write) ;; *) echo 'Only repository writers may publish'; exit 1 ;; esac
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: oven-sh/setup-bun@v2
+      - run: bun install --frozen-lockfile
+      - name: Read input safely
+        env:
+          INPUT_JSON: ${{ inputs.report_json }}
+        run: |
+          python3 - <<'PY'
+          import json, os, pathlib, re
+          event = json.loads(pathlib.Path(os.environ['GITHUB_EVENT_PATH']).read_text())
+          if event.get('issue'):
+              body = event['issue']['body'] or ''
+              match = re.search(r'### Report JSON\s+```(?:json)?\s*([\s\S]*?)```', body)
+              if not match:
+                  raise SystemExit('Use the Market report issue form with fenced JSON')
+              text = match.group(1)
+          else:
+              text = os.environ['INPUT_JSON']
+          pathlib.Path('/tmp/market-report.json').write_text(text)
+          PY
+      - name: Validate and save report
+        env:
+          CORRECTION: ${{ inputs.correction }}
+        run: |
+          if [ "$CORRECTION" = true ]; then
+            bun scripts/publish-market-report.ts /tmp/market-report.json --correction
+          else
+            bun scripts/publish-market-report.ts /tmp/market-report.json
+          fi
+      - run: bunx vitest run src/lib/markets
+      - name: Commit report
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add content/markets
+          git diff --cached --quiet && exit 0
+          git commit -m 'Publish validated Markets Desk report'
+          git push origin HEAD:main
+      - name: Deploy only when explicitly requested
+        if: github.event_name == 'workflow_dispatch' && inputs.deploy
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+        run: gh workflow run deploy.yml --repo "$REPO" --ref main
+      - name: Acknowledge issue publication
+        if: github.event_name == 'issues'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          ISSUE: ${{ github.event.issue.number }}
+        run: gh issue comment "$ISSUE" --repo "$REPO" --body 'Validated report saved to main. Deployment was not requested; review the code/preview, then manually run Deploy to GitHub Pages when ready.'

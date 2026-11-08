@@ -15,7 +15,7 @@ function load(): Report[] {
     }
     out.push(parsed.data);
   }
-  return out.sort((a, b) => (a.asOf < b.asOf ? 1 : -1));
+  return out.sort((a, b) => Date.parse(b.asOf) - Date.parse(a.asOf));
 }
 
 export const reports: Report[] = load();
