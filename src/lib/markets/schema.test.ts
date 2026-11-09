@@ -36,9 +36,24 @@ describe("report schema", () => {
 });
 
 describe("desk requirements", () => {
-  it("Opening Bell runs at 9:45 AM IST", () => expect(REPORT_META["opening-bell"].schedule).toBe("9:45 AM IST"));
-  it("Daily Study runs at 6:00 PM IST", () => expect(REPORT_META["daily-study"].schedule).toBe("6:00 PM IST"));
-  it("Risk Monitor runs at 7:00 PM IST", () => expect(REPORT_META["risk-monitor"].schedule).toBe("7:00 PM IST"));
+  it("Opening Brief runs at 9:45 AM IST", () => expect(REPORT_META["opening-brief"].schedule).toBe("9:45 AM IST"));
+  it("Opening Brief has its branded title", () => expect(REPORT_META["opening-brief"].title).toBe("The Opening Brief — India Market Opening & Global Signals"));
+  it("Market Review has its branded title", () => expect(REPORT_META["market-review"].title).toBe("The Market Review — India Equities, Macro & Cross-Asset Intelligence"));
+  it("legacy types are no longer scheduled", () => {
+    for (const t of ["opening-bell", "daily-study", "risk-monitor"] as const) expect(REPORT_META[t].schedule).toBeNull();
+  });
+  it("legacy report files still validate", () => expect(reportSchema.safeParse(base).success).toBe(true));
+  it("legacy types cannot be newly published", () => expect(() => validatePublication(base)).toThrow(/legacy/));
+  it("Opening Brief can be newly published", () =>
+    expect(validatePublication({ ...base, type: "opening-brief" }).type).toBe("opening-brief"));
+  it("Market Review requires cross-asset coverage", () => {
+    const sections = REQUIRED_TOPICS["market-review"].filter((t) => t !== "credit-spreads").map((topic) => ({ ...base.sections[0], topic, title: topic }));
+    expect(reportSchema.safeParse({ ...base, type: "market-review", sections }).success).toBe(false);
+  });
+  it("Market Review with full coverage publishes", () => {
+    const sections = REQUIRED_TOPICS["market-review"].map((topic) => ({ ...base.sections[0], topic, title: topic }));
+    expect(validatePublication({ ...base, type: "market-review", sections }).type).toBe("market-review");
+  });
   it("Mid-Market has no fixed automation", () => expect(REPORT_META["mid-market-review"].schedule).toBeNull());
   it("rejects missing baseline timestamps", () => expect(reportSchema.safeParse({ ...base, metrics: [{ ...metric, baselineAt: null }] }).success).toBe(false));
   it("rejects missing source links", () => expect(reportSchema.safeParse({ ...base, sources: [{ ...base.sources[0], url: undefined }] }).success).toBe(false));

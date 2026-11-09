@@ -1,8 +1,9 @@
-import { reportSchema, type Report } from "./schema";
+import { isLegacyType, PUBLISHABLE_TYPES, reportSchema, type Report } from "./schema";
 
 export function validatePublication(raw: unknown, previous?: unknown): Report {
   const next = reportSchema.parse(raw);
   if (!previous) {
+    if (isLegacyType(next.type)) throw new Error(`"${next.type}" is a legacy report type and can no longer be newly published; use ${PUBLISHABLE_TYPES.join(" or ")}`);
     if (next.revisions.length) throw new Error("A first publication must not claim revisions");
     return next;
   }

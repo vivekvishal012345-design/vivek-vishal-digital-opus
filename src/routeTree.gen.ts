@@ -9,74 +9,29 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as WritingRouteImport } from './routes/writing'
-import { Route as WorkRouteImport } from './routes/work'
-import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
-import { Route as ProjectsRouteImport } from './routes/projects'
-import { Route as PrinciplesRouteImport } from './routes/principles'
-import { Route as PhotographyRouteImport } from './routes/photography'
-import { Route as NowRouteImport } from './routes/now'
-import { Route as NotFoundRouteImport } from './routes/not-found'
-import { Route as MarketsRouteImport } from './routes/markets'
-import { Route as LibraryRouteImport } from './routes/library'
-import { Route as ContactRouteImport } from './routes/contact'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ContactRouteImport } from './routes/contact'
+import { Route as LibraryRouteImport } from './routes/library'
+import { Route as MarketsRouteImport } from './routes/markets'
+import { Route as NotFoundRouteImport } from './routes/not-found'
+import { Route as NowRouteImport } from './routes/now'
+import { Route as PhotographyRouteImport } from './routes/photography'
+import { Route as PrinciplesRouteImport } from './routes/principles'
+import { Route as ProjectsRouteImport } from './routes/projects'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as WorkRouteImport } from './routes/work'
+import { Route as WritingRouteImport } from './routes/writing'
 import { Route as MarketsIndexRouteImport } from './routes/markets.index'
-import { Route as MarketsRiskMonitorRouteImport } from './routes/markets.risk-monitor'
-import { Route as MarketsOpeningBellRouteImport } from './routes/markets.opening-bell'
-import { Route as MarketsMidMarketReviewRouteImport } from './routes/markets.mid-market-review'
 import { Route as MarketsDailyStudyRouteImport } from './routes/markets.daily-study'
+import { Route as MarketsMidMarketReviewRouteImport } from './routes/markets.mid-market-review'
+import { Route as MarketsOpeningBellRouteImport } from './routes/markets.opening-bell'
+import { Route as MarketsRiskMonitorRouteImport } from './routes/markets.risk-monitor'
 import { Route as MarketsArchiveIndexRouteImport } from './routes/markets.archive.index'
 import { Route as MarketsArchiveDateTypeRouteImport } from './routes/markets.archive.$date.$type'
 
-const WritingRoute = WritingRouteImport.update({
-  id: '/writing',
-  path: '/writing',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const WorkRoute = WorkRouteImport.update({
-  id: '/work',
-  path: '/work',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
-  id: '/sitemap.xml',
-  path: '/sitemap.xml',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ProjectsRoute = ProjectsRouteImport.update({
-  id: '/projects',
-  path: '/projects',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const PrinciplesRoute = PrinciplesRouteImport.update({
-  id: '/principles',
-  path: '/principles',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const PhotographyRoute = PhotographyRouteImport.update({
-  id: '/photography',
-  path: '/photography',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const NowRoute = NowRouteImport.update({
-  id: '/now',
-  path: '/now',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const NotFoundRoute = NotFoundRouteImport.update({
-  id: '/not-found',
-  path: '/not-found',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const MarketsRoute = MarketsRouteImport.update({
-  id: '/markets',
-  path: '/markets',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const LibraryRoute = LibraryRouteImport.update({
-  id: '/library',
-  path: '/library',
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ContactRoute = ContactRouteImport.update({
@@ -84,9 +39,54 @@ const ContactRoute = ContactRouteImport.update({
   path: '/contact',
   getParentRoute: () => rootRouteImport,
 } as any)
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
+const LibraryRoute = LibraryRouteImport.update({
+  id: '/library',
+  path: '/library',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MarketsRoute = MarketsRouteImport.update({
+  id: '/markets',
+  path: '/markets',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NotFoundRoute = NotFoundRouteImport.update({
+  id: '/not-found',
+  path: '/not-found',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NowRoute = NowRouteImport.update({
+  id: '/now',
+  path: '/now',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PhotographyRoute = PhotographyRouteImport.update({
+  id: '/photography',
+  path: '/photography',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrinciplesRoute = PrinciplesRouteImport.update({
+  id: '/principles',
+  path: '/principles',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProjectsRoute = ProjectsRouteImport.update({
+  id: '/projects',
+  path: '/projects',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const WorkRoute = WorkRouteImport.update({
+  id: '/work',
+  path: '/work',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const WritingRoute = WritingRouteImport.update({
+  id: '/writing',
+  path: '/writing',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MarketsIndexRoute = MarketsIndexRouteImport.update({
@@ -94,14 +94,9 @@ const MarketsIndexRoute = MarketsIndexRouteImport.update({
   path: '/',
   getParentRoute: () => MarketsRoute,
 } as any)
-const MarketsRiskMonitorRoute = MarketsRiskMonitorRouteImport.update({
-  id: '/risk-monitor',
-  path: '/risk-monitor',
-  getParentRoute: () => MarketsRoute,
-} as any)
-const MarketsOpeningBellRoute = MarketsOpeningBellRouteImport.update({
-  id: '/opening-bell',
-  path: '/opening-bell',
+const MarketsDailyStudyRoute = MarketsDailyStudyRouteImport.update({
+  id: '/daily-study',
+  path: '/daily-study',
   getParentRoute: () => MarketsRoute,
 } as any)
 const MarketsMidMarketReviewRoute = MarketsMidMarketReviewRouteImport.update({
@@ -109,9 +104,14 @@ const MarketsMidMarketReviewRoute = MarketsMidMarketReviewRouteImport.update({
   path: '/mid-market-review',
   getParentRoute: () => MarketsRoute,
 } as any)
-const MarketsDailyStudyRoute = MarketsDailyStudyRouteImport.update({
-  id: '/daily-study',
-  path: '/daily-study',
+const MarketsOpeningBellRoute = MarketsOpeningBellRouteImport.update({
+  id: '/opening-bell',
+  path: '/opening-bell',
+  getParentRoute: () => MarketsRoute,
+} as any)
+const MarketsRiskMonitorRoute = MarketsRiskMonitorRouteImport.update({
+  id: '/risk-monitor',
+  path: '/risk-monitor',
   getParentRoute: () => MarketsRoute,
 } as any)
 const MarketsArchiveIndexRoute = MarketsArchiveIndexRouteImport.update({
@@ -270,74 +270,11 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/writing': {
-      id: '/writing'
-      path: '/writing'
-      fullPath: '/writing'
-      preLoaderRoute: typeof WritingRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/work': {
-      id: '/work'
-      path: '/work'
-      fullPath: '/work'
-      preLoaderRoute: typeof WorkRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/sitemap.xml': {
-      id: '/sitemap.xml'
-      path: '/sitemap.xml'
-      fullPath: '/sitemap.xml'
-      preLoaderRoute: typeof SitemapDotxmlRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/projects': {
-      id: '/projects'
-      path: '/projects'
-      fullPath: '/projects'
-      preLoaderRoute: typeof ProjectsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/principles': {
-      id: '/principles'
-      path: '/principles'
-      fullPath: '/principles'
-      preLoaderRoute: typeof PrinciplesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/photography': {
-      id: '/photography'
-      path: '/photography'
-      fullPath: '/photography'
-      preLoaderRoute: typeof PhotographyRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/now': {
-      id: '/now'
-      path: '/now'
-      fullPath: '/now'
-      preLoaderRoute: typeof NowRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/not-found': {
-      id: '/not-found'
-      path: '/not-found'
-      fullPath: '/not-found'
-      preLoaderRoute: typeof NotFoundRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/markets': {
-      id: '/markets'
-      path: '/markets'
-      fullPath: '/markets'
-      preLoaderRoute: typeof MarketsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/library': {
-      id: '/library'
-      path: '/library'
-      fullPath: '/library'
-      preLoaderRoute: typeof LibraryRouteImport
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/contact': {
@@ -347,11 +284,74 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ContactRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
+    '/library': {
+      id: '/library'
+      path: '/library'
+      fullPath: '/library'
+      preLoaderRoute: typeof LibraryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/markets': {
+      id: '/markets'
+      path: '/markets'
+      fullPath: '/markets'
+      preLoaderRoute: typeof MarketsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/not-found': {
+      id: '/not-found'
+      path: '/not-found'
+      fullPath: '/not-found'
+      preLoaderRoute: typeof NotFoundRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/now': {
+      id: '/now'
+      path: '/now'
+      fullPath: '/now'
+      preLoaderRoute: typeof NowRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/photography': {
+      id: '/photography'
+      path: '/photography'
+      fullPath: '/photography'
+      preLoaderRoute: typeof PhotographyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/principles': {
+      id: '/principles'
+      path: '/principles'
+      fullPath: '/principles'
+      preLoaderRoute: typeof PrinciplesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/projects': {
+      id: '/projects'
+      path: '/projects'
+      fullPath: '/projects'
+      preLoaderRoute: typeof ProjectsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/work': {
+      id: '/work'
+      path: '/work'
+      fullPath: '/work'
+      preLoaderRoute: typeof WorkRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/writing': {
+      id: '/writing'
+      path: '/writing'
+      fullPath: '/writing'
+      preLoaderRoute: typeof WritingRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/markets/': {
@@ -361,18 +361,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MarketsIndexRouteImport
       parentRoute: typeof MarketsRoute
     }
-    '/markets/risk-monitor': {
-      id: '/markets/risk-monitor'
-      path: '/risk-monitor'
-      fullPath: '/markets/risk-monitor'
-      preLoaderRoute: typeof MarketsRiskMonitorRouteImport
-      parentRoute: typeof MarketsRoute
-    }
-    '/markets/opening-bell': {
-      id: '/markets/opening-bell'
-      path: '/opening-bell'
-      fullPath: '/markets/opening-bell'
-      preLoaderRoute: typeof MarketsOpeningBellRouteImport
+    '/markets/daily-study': {
+      id: '/markets/daily-study'
+      path: '/daily-study'
+      fullPath: '/markets/daily-study'
+      preLoaderRoute: typeof MarketsDailyStudyRouteImport
       parentRoute: typeof MarketsRoute
     }
     '/markets/mid-market-review': {
@@ -382,11 +375,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MarketsMidMarketReviewRouteImport
       parentRoute: typeof MarketsRoute
     }
-    '/markets/daily-study': {
-      id: '/markets/daily-study'
-      path: '/daily-study'
-      fullPath: '/markets/daily-study'
-      preLoaderRoute: typeof MarketsDailyStudyRouteImport
+    '/markets/opening-bell': {
+      id: '/markets/opening-bell'
+      path: '/opening-bell'
+      fullPath: '/markets/opening-bell'
+      preLoaderRoute: typeof MarketsOpeningBellRouteImport
+      parentRoute: typeof MarketsRoute
+    }
+    '/markets/risk-monitor': {
+      id: '/markets/risk-monitor'
+      path: '/risk-monitor'
+      fullPath: '/markets/risk-monitor'
+      preLoaderRoute: typeof MarketsRiskMonitorRouteImport
       parentRoute: typeof MarketsRoute
     }
     '/markets/archive/': {

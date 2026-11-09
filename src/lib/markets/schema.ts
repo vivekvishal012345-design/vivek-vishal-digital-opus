@@ -6,17 +6,38 @@ export const REPORT_TYPES = [
   "mid-market-review",
   "daily-study",
   "risk-monitor",
+  "opening-brief",
+  "market-review",
 ] as const;
 export type ReportType = (typeof REPORT_TYPES)[number];
+
+export const HUB_NAME = "Vivek Vishal | Markets Desk";
+
+/** Types accepted for new publications. Legacy types stay valid for existing files and corrections. */
+export const PUBLISHABLE_TYPES = ["opening-brief", "market-review"] as const satisfies readonly ReportType[];
+export const LEGACY_TYPES = REPORT_TYPES.filter((t) => !(PUBLISHABLE_TYPES as readonly string[]).includes(t));
+export const isLegacyType = (t: ReportType) => !(PUBLISHABLE_TYPES as readonly string[]).includes(t);
 
 export const REPORT_META: Record<
   ReportType,
   { title: string; short: string; schedule: string | null; blurb: string }
 > = {
+  "opening-brief": {
+    title: "The Opening Brief — India Market Opening & Global Signals",
+    short: "Opening Brief",
+    schedule: "9:45 AM IST",
+    blurb: "The morning read: overnight global signals, the Indian open, and what matters for the session.",
+  },
+  "market-review": {
+    title: "The Market Review — India Equities, Macro & Cross-Asset Intelligence",
+    short: "Market Review",
+    schedule: "Evening IST",
+    blurb: "The evening review: closes, attribution, flows, one company study, and the rates, currency and commodity picture.",
+  },
   "opening-bell": {
     title: "Opening Bell",
     short: "Opening Bell",
-    schedule: "9:45 AM IST",
+    schedule: null,
     blurb: "The first read of the Indian session: overnight cues, the open, and what matters for the day.",
   },
   "mid-market-review": {
@@ -28,13 +49,13 @@ export const REPORT_META: Record<
   "daily-study": {
     title: "Daily Indian Market Study",
     short: "Daily Study",
-    schedule: "6:00 PM IST",
+    schedule: null,
     blurb: "The closing study: indices, breadth, sectors, flows and what changed during the day.",
   },
   "risk-monitor": {
     title: "Cross-Asset Risk Monitor",
     short: "Risk Monitor",
-    schedule: "7:00 PM IST",
+    schedule: null,
     blurb: "Rates, currency, commodities, volatility and global risk signals relevant to Indian markets.",
   },
 };
@@ -136,6 +157,9 @@ export const reportSchema = z
       if (r.type !== "mid-market-review") for (const horizon of ["3M", "6M", "12M"] as const) {
         if (!r.scenarios.some((s) => s.horizon === horizon)) ctx.addIssue({ code: "custom", message: `missing ${horizon} conditional scenario` });
       }
+    }
+    if (r.type === "market-review") for (const topic of new Set(r.sections.map((s) => s.topic))) {
+      if (r.sections.filter((s) => s.topic === topic).length > 1 && ["attribution", "company-deep-dive", "historical-returns", "cross-assets"].includes(topic)) ctx.addIssue({ code: "custom", message: `Market Review must cover ${topic} once` });
     }
     if (r.type === "risk-monitor" && r.sections.some((s) => ["attribution", "company-deep-dive"].includes(s.topic))) ctx.addIssue({ code: "custom", message: "Risk Monitor must not duplicate stock attribution or company deep dive" });
     r.metrics.forEach((m) => {

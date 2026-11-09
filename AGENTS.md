@@ -12,3 +12,4 @@
 - Markets is part of the static portfolio: repository JSON is validated by shared schemas and prerendered; no runtime backend is required.
 - Report coverage contracts, calendar evidence, observation baselines, and conditional scenarios are validated before publication so unavailable research remains explicit rather than fabricated.
 - Report publication uses a collaborator-authorized GitHub workflow, append-only revision notes and Git history; deployment is opt-in because saving content must not silently publish it.
+- Report types are never deleted: retired types stay in the schema as legacy (readable, correctable, archived at their URLs) while only the publishable-type list accepts new publications.
