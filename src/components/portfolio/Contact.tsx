@@ -6,7 +6,7 @@ import { toast } from "sonner";
 
 
 const EMAIL = "hello@vivekvishal.com";
-const LINKEDIN = "https://www.linkedin.com/in/vivekvishal";
+const LINKEDIN = "https://www.linkedin.com/in/vivek-vishal-47867b203";
 
 export function Contact() {
   const [sent, setSent] = useState(false);

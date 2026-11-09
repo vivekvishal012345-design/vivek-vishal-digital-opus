@@ -106,6 +106,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         children:
           "(function(){try{var t=localStorage.getItem('vv-theme')||'dark';document.documentElement.classList.add(t);document.documentElement.style.colorScheme=t;}catch(e){document.documentElement.classList.add('dark');}})();",
       },
+      {
+        type: "module",
+        src: "https://static.cloudflareinsights.com/beacon.min.js",
+        "data-cf-beacon": '{"token": "47742a1925ef49c58c199eaf283fe2c3"}',
+      },
     ],
   }),
   shellComponent: RootShell,

@@ -3,7 +3,7 @@ import { Link } from "@tanstack/react-router";
 import { navLinks } from "./Nav";
 
 const EMAIL = "hello@vivekvishal.com";
-const LINKEDIN = "https://www.linkedin.com/in/vivekvishal";
+const LINKEDIN = "https://www.linkedin.com/in/vivek-vishal-47867b203";
 
 export function Footer() {
   const scrollTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
