@@ -28,6 +28,9 @@ const routes = [
   "/principles",
   "/contact",
   "/markets",
+  "/markets/opening-brief",
+  "/markets/market-review",
+  // retired formats: still prerendered so existing links work (noindex, not in sitemap)
   "/markets/opening-bell",
   "/markets/mid-market-review",
   "/markets/daily-study",

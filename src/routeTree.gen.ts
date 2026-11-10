@@ -23,8 +23,10 @@ import { Route as WorkRouteImport } from './routes/work'
 import { Route as WritingRouteImport } from './routes/writing'
 import { Route as MarketsIndexRouteImport } from './routes/markets.index'
 import { Route as MarketsDailyStudyRouteImport } from './routes/markets.daily-study'
+import { Route as MarketsMarketReviewRouteImport } from './routes/markets.market-review'
 import { Route as MarketsMidMarketReviewRouteImport } from './routes/markets.mid-market-review'
 import { Route as MarketsOpeningBellRouteImport } from './routes/markets.opening-bell'
+import { Route as MarketsOpeningBriefRouteImport } from './routes/markets.opening-brief'
 import { Route as MarketsRiskMonitorRouteImport } from './routes/markets.risk-monitor'
 import { Route as MarketsArchiveIndexRouteImport } from './routes/markets.archive.index'
 import { Route as MarketsArchiveDateTypeRouteImport } from './routes/markets.archive.$date.$type'
@@ -99,6 +101,11 @@ const MarketsDailyStudyRoute = MarketsDailyStudyRouteImport.update({
   path: '/daily-study',
   getParentRoute: () => MarketsRoute,
 } as any)
+const MarketsMarketReviewRoute = MarketsMarketReviewRouteImport.update({
+  id: '/market-review',
+  path: '/market-review',
+  getParentRoute: () => MarketsRoute,
+} as any)
 const MarketsMidMarketReviewRoute = MarketsMidMarketReviewRouteImport.update({
   id: '/mid-market-review',
   path: '/mid-market-review',
@@ -107,6 +114,11 @@ const MarketsMidMarketReviewRoute = MarketsMidMarketReviewRouteImport.update({
 const MarketsOpeningBellRoute = MarketsOpeningBellRouteImport.update({
   id: '/opening-bell',
   path: '/opening-bell',
+  getParentRoute: () => MarketsRoute,
+} as any)
+const MarketsOpeningBriefRoute = MarketsOpeningBriefRouteImport.update({
+  id: '/opening-brief',
+  path: '/opening-brief',
   getParentRoute: () => MarketsRoute,
 } as any)
 const MarketsRiskMonitorRoute = MarketsRiskMonitorRouteImport.update({
@@ -139,8 +151,10 @@ export interface FileRoutesByFullPath {
   '/work': typeof WorkRoute
   '/writing': typeof WritingRoute
   '/markets/daily-study': typeof MarketsDailyStudyRoute
+  '/markets/market-review': typeof MarketsMarketReviewRoute
   '/markets/mid-market-review': typeof MarketsMidMarketReviewRoute
   '/markets/opening-bell': typeof MarketsOpeningBellRoute
+  '/markets/opening-brief': typeof MarketsOpeningBriefRoute
   '/markets/risk-monitor': typeof MarketsRiskMonitorRoute
   '/markets/': typeof MarketsIndexRoute
   '/markets/archive/': typeof MarketsArchiveIndexRoute
@@ -159,8 +173,10 @@ export interface FileRoutesByTo {
   '/work': typeof WorkRoute
   '/writing': typeof WritingRoute
   '/markets/daily-study': typeof MarketsDailyStudyRoute
+  '/markets/market-review': typeof MarketsMarketReviewRoute
   '/markets/mid-market-review': typeof MarketsMidMarketReviewRoute
   '/markets/opening-bell': typeof MarketsOpeningBellRoute
+  '/markets/opening-brief': typeof MarketsOpeningBriefRoute
   '/markets/risk-monitor': typeof MarketsRiskMonitorRoute
   '/markets': typeof MarketsIndexRoute
   '/markets/archive': typeof MarketsArchiveIndexRoute
@@ -181,8 +197,10 @@ export interface FileRoutesById {
   '/work': typeof WorkRoute
   '/writing': typeof WritingRoute
   '/markets/daily-study': typeof MarketsDailyStudyRoute
+  '/markets/market-review': typeof MarketsMarketReviewRoute
   '/markets/mid-market-review': typeof MarketsMidMarketReviewRoute
   '/markets/opening-bell': typeof MarketsOpeningBellRoute
+  '/markets/opening-brief': typeof MarketsOpeningBriefRoute
   '/markets/risk-monitor': typeof MarketsRiskMonitorRoute
   '/markets/': typeof MarketsIndexRoute
   '/markets/archive/': typeof MarketsArchiveIndexRoute
@@ -204,8 +222,10 @@ export interface FileRouteTypes {
     | '/work'
     | '/writing'
     | '/markets/daily-study'
+    | '/markets/market-review'
     | '/markets/mid-market-review'
     | '/markets/opening-bell'
+    | '/markets/opening-brief'
     | '/markets/risk-monitor'
     | '/markets/'
     | '/markets/archive/'
@@ -224,8 +244,10 @@ export interface FileRouteTypes {
     | '/work'
     | '/writing'
     | '/markets/daily-study'
+    | '/markets/market-review'
     | '/markets/mid-market-review'
     | '/markets/opening-bell'
+    | '/markets/opening-brief'
     | '/markets/risk-monitor'
     | '/markets'
     | '/markets/archive'
@@ -245,8 +267,10 @@ export interface FileRouteTypes {
     | '/work'
     | '/writing'
     | '/markets/daily-study'
+    | '/markets/market-review'
     | '/markets/mid-market-review'
     | '/markets/opening-bell'
+    | '/markets/opening-brief'
     | '/markets/risk-monitor'
     | '/markets/'
     | '/markets/archive/'
@@ -368,6 +392,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MarketsDailyStudyRouteImport
       parentRoute: typeof MarketsRoute
     }
+    '/markets/market-review': {
+      id: '/markets/market-review'
+      path: '/market-review'
+      fullPath: '/markets/market-review'
+      preLoaderRoute: typeof MarketsMarketReviewRouteImport
+      parentRoute: typeof MarketsRoute
+    }
     '/markets/mid-market-review': {
       id: '/markets/mid-market-review'
       path: '/mid-market-review'
@@ -380,6 +411,13 @@ declare module '@tanstack/react-router' {
       path: '/opening-bell'
       fullPath: '/markets/opening-bell'
       preLoaderRoute: typeof MarketsOpeningBellRouteImport
+      parentRoute: typeof MarketsRoute
+    }
+    '/markets/opening-brief': {
+      id: '/markets/opening-brief'
+      path: '/opening-brief'
+      fullPath: '/markets/opening-brief'
+      preLoaderRoute: typeof MarketsOpeningBriefRouteImport
       parentRoute: typeof MarketsRoute
     }
     '/markets/risk-monitor': {
@@ -408,8 +446,10 @@ declare module '@tanstack/react-router' {
 
 interface MarketsRouteChildren {
   MarketsDailyStudyRoute: typeof MarketsDailyStudyRoute
+  MarketsMarketReviewRoute: typeof MarketsMarketReviewRoute
   MarketsMidMarketReviewRoute: typeof MarketsMidMarketReviewRoute
   MarketsOpeningBellRoute: typeof MarketsOpeningBellRoute
+  MarketsOpeningBriefRoute: typeof MarketsOpeningBriefRoute
   MarketsRiskMonitorRoute: typeof MarketsRiskMonitorRoute
   MarketsIndexRoute: typeof MarketsIndexRoute
   MarketsArchiveIndexRoute: typeof MarketsArchiveIndexRoute
@@ -418,8 +458,10 @@ interface MarketsRouteChildren {
 
 const MarketsRouteChildren: MarketsRouteChildren = {
   MarketsDailyStudyRoute: MarketsDailyStudyRoute,
+  MarketsMarketReviewRoute: MarketsMarketReviewRoute,
   MarketsMidMarketReviewRoute: MarketsMidMarketReviewRoute,
   MarketsOpeningBellRoute: MarketsOpeningBellRoute,
+  MarketsOpeningBriefRoute: MarketsOpeningBriefRoute,
   MarketsRiskMonitorRoute: MarketsRiskMonitorRoute,
   MarketsIndexRoute: MarketsIndexRoute,
   MarketsArchiveIndexRoute: MarketsArchiveIndexRoute,

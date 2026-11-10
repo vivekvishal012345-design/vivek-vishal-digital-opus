@@ -1,4 +1,4 @@
-export function marketsHead(path: string, title: string, description: string) {
+export function marketsHead(path: string, title: string, description: string, opts: { noindex?: boolean } = {}) {
   const url = `https://vivekvishal.com${path}`;
   return {
     meta: [
@@ -9,6 +9,7 @@ export function marketsHead(path: string, title: string, description: string) {
       { property: "og:type", content: "website" },
       { property: "og:url", content: url },
       { name: "twitter:card", content: "summary_large_image" },
+      ...(opts.noindex ? [{ name: "robots", content: "noindex, follow" }] : []),
     ],
     links: [{ rel: "canonical", href: url }],
   };

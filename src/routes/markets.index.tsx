@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { HUB_NAME, LEGACY_TYPES, PUBLISHABLE_TYPES, REPORT_META } from "@/lib/markets/schema";
+import { ACTIVE_PUBLISHABLE_TYPES, HUB_NAME, REPORT_META } from "@/lib/markets/schema";
 import { formatIST, latestByType } from "@/lib/markets/reports";
 import { marketsHead } from "@/lib/markets/head";
 
@@ -13,13 +13,6 @@ export const Route = createFileRoute("/markets/")({
   component: MarketsOverview,
 });
 
-const LEGACY_PATHS = {
-  "opening-bell": "/markets/opening-bell",
-  "mid-market-review": "/markets/mid-market-review",
-  "daily-study": "/markets/daily-study",
-  "risk-monitor": "/markets/risk-monitor",
-} as const;
-
 function MarketsOverview() {
   return (
     <div className="mx-auto max-w-3xl">
@@ -31,7 +24,7 @@ function MarketsOverview() {
       </p>
 
       <ul className="mt-12 border-t border-border">
-        {PUBLISHABLE_TYPES.map((t) => {
+        {ACTIVE_PUBLISHABLE_TYPES.map((t) => {
           const meta = REPORT_META[t];
           const latest = latestByType(t);
           const body = (
@@ -50,27 +43,11 @@ function MarketsOverview() {
           const cls = "group grid gap-2 py-6 sm:grid-cols-[9rem_1fr] sm:gap-6";
           return (
             <li key={t} className="border-b border-border">
-              {latest ? (
-                <Link to="/markets/archive/$date/$type" params={{ date: latest.date, type: t }} className={cls}>{body}</Link>
-              ) : (
-                <Link to="/markets/archive" className={cls}>{body}</Link>
-              )}
+              <Link to={t === "opening-brief" ? "/markets/opening-brief" : "/markets/market-review"} className={cls}>{body}</Link>
             </li>
           );
         })}
       </ul>
-
-      <div className="mt-10">
-        <div className="text-xs uppercase tracking-[0.14em] text-muted-foreground">Earlier formats</div>
-        <p className="mt-2 text-sm text-muted-foreground">
-          {LEGACY_TYPES.map((t, i) => (
-            <span key={t}>
-              {i > 0 && " · "}
-              <Link to={LEGACY_PATHS[t as keyof typeof LEGACY_PATHS]} className="underline-offset-4 hover:underline">{REPORT_META[t].short}</Link>
-            </span>
-          ))}
-        </p>
-      </div>
 
       <p className="mt-10 text-xs leading-relaxed text-muted-foreground">
         Reports are prepared with AI assistance from public sources and published as written. They are research notes, not investment advice.

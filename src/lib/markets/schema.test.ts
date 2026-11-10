@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import { computeChange, reportSchema } from "./schema";
 import { REQUIRED_TOPICS } from "./requirements";
 import { validatePublication } from "./publishing";
-import { REPORT_META } from "./schema";
+import { ACTIVE_PUBLISHABLE_TYPES, LEGACY_READABLE_TYPES, REPORT_META } from "./schema";
 
 const base = {
   type: "opening-bell",
@@ -55,6 +55,14 @@ describe("desk requirements", () => {
     expect(validatePublication({ ...base, type: "market-review", sections }).type).toBe("market-review");
   });
   it("Mid-Market has no fixed automation", () => expect(REPORT_META["mid-market-review"].schedule).toBeNull());
+  it("exactly two active publications", () => expect([...ACTIVE_PUBLISHABLE_TYPES]).toEqual(["opening-brief", "market-review"]));
+  it("Market Review runs at 6:00 PM IST", () => expect(REPORT_META["market-review"].schedule).toBe("6:00 PM IST"));
+  it("Mid-Market Review and Risk Monitor are legacy-readable only", () => {
+    expect(LEGACY_READABLE_TYPES).toContain("mid-market-review");
+    expect(LEGACY_READABLE_TYPES).toContain("risk-monitor");
+    expect(() => validatePublication({ ...base, type: "mid-market-review", session: { ...base.session, status: "closed" }, sections: [], scenarios: [] })).toThrow(/legacy/);
+    expect(() => validatePublication({ ...base, type: "risk-monitor", session: { ...base.session, status: "closed" }, sections: [], scenarios: [] })).toThrow(/legacy/);
+  });
   it("rejects missing baseline timestamps", () => expect(reportSchema.safeParse({ ...base, metrics: [{ ...metric, baselineAt: null }] }).success).toBe(false));
   it("rejects missing source links", () => expect(reportSchema.safeParse({ ...base, sources: [{ ...base.sources[0], url: undefined }] }).success).toBe(false));
   it("requires stale observation explanations", () => expect(reportSchema.safeParse({ ...base, metrics: [{ ...metric, status: "stale" }] }).success).toBe(false));

@@ -13,10 +13,14 @@ export type ReportType = (typeof REPORT_TYPES)[number];
 
 export const HUB_NAME = "Vivek Vishal | Markets Desk";
 
-/** Types accepted for new publications. Legacy types stay valid for existing files and corrections. */
-export const PUBLISHABLE_TYPES = ["opening-brief", "market-review"] as const satisfies readonly ReportType[];
-export const LEGACY_TYPES = REPORT_TYPES.filter((t) => !(PUBLISHABLE_TYPES as readonly string[]).includes(t));
-export const isLegacyType = (t: ReportType) => !(PUBLISHABLE_TYPES as readonly string[]).includes(t);
+/** The only two publications that may be generated or published going forward. */
+export const ACTIVE_PUBLISHABLE_TYPES = ["opening-brief", "market-review"] as const satisfies readonly ReportType[];
+/** Retired types: still valid for existing files, archive rendering and corrections; never offered for new publication. */
+export const LEGACY_READABLE_TYPES = ["opening-bell", "mid-market-review", "daily-study", "risk-monitor"] as const satisfies readonly ReportType[];
+/** Back-compat aliases. */
+export const PUBLISHABLE_TYPES = ACTIVE_PUBLISHABLE_TYPES;
+export const LEGACY_TYPES = LEGACY_READABLE_TYPES;
+export const isLegacyType = (t: ReportType) => (LEGACY_READABLE_TYPES as readonly string[]).includes(t);
 
 export const REPORT_META: Record<
   ReportType,
@@ -31,8 +35,8 @@ export const REPORT_META: Record<
   "market-review": {
     title: "The Market Review — India Equities, Macro & Cross-Asset Intelligence",
     short: "Market Review",
-    schedule: "Evening IST",
-    blurb: "The evening review: closes, attribution, flows, one company study, and the rates, currency and commodity picture.",
+    schedule: "6:00 PM IST",
+    blurb: "The evening review: closes, attribution, flows, one company study, and full cross-asset and risk monitoring across rates, currency, commodities and credit.",
   },
   "opening-bell": {
     title: "Opening Bell",

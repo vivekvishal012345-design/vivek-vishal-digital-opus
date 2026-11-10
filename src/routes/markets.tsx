@@ -7,10 +7,8 @@ export const Route = createFileRoute("/markets")({
 
 const tabs = [
   { to: "/markets", label: "Overview" },
-  { to: "/markets/opening-bell", label: "Opening Bell" },
-  { to: "/markets/mid-market-review", label: "Mid-Market" },
-  { to: "/markets/daily-study", label: "Daily Study" },
-  { to: "/markets/risk-monitor", label: "Risk Monitor" },
+  { to: "/markets/opening-brief", label: "Opening Brief" },
+  { to: "/markets/market-review", label: "Market Review" },
   { to: "/markets/archive", label: "Archive" },
 ] as const;
 

@@ -3,7 +3,7 @@ import { formatDate, reportsByDate } from "@/lib/markets/reports";
 import { ReportListItem } from "@/components/markets/Report";
 import { marketsHead } from "@/lib/markets/head";
 import { useState } from "react";
-import { REPORT_META, REPORT_TYPES } from "@/lib/markets/schema";
+import { ACTIVE_PUBLISHABLE_TYPES, LEGACY_READABLE_TYPES, REPORT_META } from "@/lib/markets/schema";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 export const Route = createFileRoute("/markets/archive/")({
@@ -11,14 +11,18 @@ export const Route = createFileRoute("/markets/archive/")({
     marketsHead(
       "/markets/archive",
       "Markets Archive — Vivek Vishal",
-      "Every published Opening Bell, Mid-Market Review, Daily Market Study and Risk Monitor, by date.",
+      "Every published Opening Brief and Market Review, by date.",
     ),
   component: ArchivePage,
 });
 
 function ArchivePage() {
   const [filter, setFilter] = useState("all");
-  const groups = reportsByDate().map((g) => ({ ...g, items: g.items.filter((r) => filter === "all" || r.type === filter) })).filter((g) => g.items.length);
+  // Legacy formats appear in the filter only when historical reports of that type exist.
+  const all = reportsByDate();
+  const present = new Set(all.flatMap((g) => g.items.map((r) => r.type)));
+  const filterTypes = [...ACTIVE_PUBLISHABLE_TYPES, ...LEGACY_READABLE_TYPES.filter((t) => present.has(t))];
+  const groups = all.map((g) => ({ ...g, items: g.items.filter((r) => filter === "all" || r.type === filter) })).filter((g) => g.items.length);
   return (
     <div className="mx-auto max-w-3xl">
       <h1 className="font-display text-3xl font-medium tracking-tight sm:text-4xl">Archive</h1>
@@ -26,7 +30,7 @@ function ArchivePage() {
       <div className="mt-6 max-w-xs">
         <Select value={filter} onValueChange={setFilter}>
           <SelectTrigger aria-label="Filter reports"><SelectValue /></SelectTrigger>
-          <SelectContent><SelectItem value="all">All reports</SelectItem>{REPORT_TYPES.map((t) => <SelectItem key={t} value={t}>{REPORT_META[t].title}</SelectItem>)}</SelectContent>
+          <SelectContent><SelectItem value="all">All reports</SelectItem>{filterTypes.map((t) => <SelectItem key={t} value={t}>{REPORT_META[t].title}</SelectItem>)}</SelectContent>
         </Select>
       </div>
       {groups.length === 0 ? (

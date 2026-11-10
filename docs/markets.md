@@ -4,13 +4,13 @@ This is a section of Vivek Vishal's existing personal website, not a second site
 
 ## Report files and validation
 
-One JSON object per `content/markets/YYYY-MM-DD/<type>.json`. Types: `opening-bell`, `mid-market-review`, `daily-study`, `risk-monitor`. The shared source of truth is `src/lib/markets/schema.ts`; required coverage keys are in `requirements.ts`. Invalid reports fail site loading/build rather than going live.
+One JSON object per `content/markets/YYYY-MM-DD/<type>.json`. Active publications (the only types accepted for new reports): `opening-brief` (The Opening Brief — 9:45 AM IST) and `market-review` (The Market Review — 6:00 PM IST, including all cross-asset and risk monitoring). Retired types (`opening-bell`, `mid-market-review`, `daily-study`, `risk-monitor`) remain readable for any historical files and corrections only; their old URLs are kept, marked noindex and excluded from the sitemap. The shared source of truth is `src/lib/markets/schema.ts`; required coverage keys are in `requirements.ts`. Invalid reports fail site loading/build rather than going live.
 
 ### Example format (types only, not sample market data)
 
 ```typescript
 {
-  type: "opening-bell" | "mid-market-review" | "daily-study" | "risk-monitor",
+  type: "opening-brief" | "market-review", // retired types are archive-readable only
   date: string, // YYYY-MM-DD, must match asOf's IST date and file directory
   title?: string,
   asOf: string, generatedAt: string, // valid ISO timestamps with explicit offset
@@ -57,7 +57,9 @@ Generate only verified research using current primary/high-quality sources: NSE/
 
 Check the NSE calendar for that date before asserting a session; weekend/holiday reports use `session.status = closed` with source and note, omit Indian session price observations, and may still discuss global/historical data distinctly. No-session reports are allowed without the trading-session coverage keys or scenarios. Special weekend sessions require editorial review outside the normal schema; never assume a session just because a quote exists.
 
-### Opening Bell — 9:45 AM Asia/Kolkata
+### The Opening Brief (`opening-brief`) — 9:45 AM Asia/Kolkata
+
+Keep it concise.
 
 Required topic keys:
 - `index-open`: Nifty previous close, **official open**, latest timestamped observation, absolute points and percentage change.
@@ -71,7 +73,9 @@ Required topic keys:
 
 Include 3M/6M/12M reasoned market scenarios with confidence, alternatives, confirmation/invalidation triggers; disclose missing evidence. Avoid invented targets.
 
-### Daily Indian Market Study — 6:00 PM Asia/Kolkata
+### The Market Review (`market-review`) — 6:00 PM Asia/Kolkata
+
+Comprehensive. Combines the closing study with the cross-asset risk monitor below; each topic is covered once.
 
 Required topic keys:
 - `index-closes`: official closes, previous/latest, points/%, timestamps.
@@ -82,13 +86,11 @@ Required topic keys:
 - `company-deep-dive`: one rotating business; business model, industry, competitive position, management/capital allocation, quality, valuation (P/E, P/B, EV/EBITDA where relevant), earnings, margins, cash conversion, balance sheet, risks, peers, fair-value scenarios and sensitivities. Cite statements and period ends. Ratios not appropriate to the business should be identified as such. Don't rotate by inventing companies or results; review recent archive to avoid repetition.
 - `philosophy-fit`: state the investment philosophy used, then explain why the business fits or fails it. Do not attribute an invented philosophy to Vivek.
 - `historical-returns`: actual Nifty/sector 3M/6M/1Y returns with dated observations.
-- `cross-assets`: concise implications rather than a duplicate Risk Monitor.
+- `cross-assets`: concise implications; detailed risk coverage follows in the keys below.
 
 Include market **and company** 3M/6M/12M scenarios (use multiple entries per horizon/subject), confidence, alternatives, confirmation/invalidation and valuation sensitivities. These are conditional estimates, not promised returns.
 
-### Cross-Asset Risk Monitor — 7:00 PM Asia/Kolkata
-
-Required topic keys:
+Cross-asset and risk-monitoring topic keys (also required in The Market Review):
 - `indices-volatility`: Nifty, Bank Nifty and India VIX.
 - `currency-flows`: USD/INR and dated FPI flows.
 - `commodities`: Brent, natural gas, gold/silver and relevant industrial commodities. Identify instrument, unit, contract/spot and session date.
@@ -99,11 +101,7 @@ Required topic keys:
 - `yield-vs-price`: distinguish yield movement from bond-price change; maturity and duration matter.
 - `historical-returns`: actual 3M/6M/1Y observations/returns where meaningful, yield/spread changes in bps where appropriate.
 
-Include conditional 3M/6M/12M cross-asset scenarios with confidence, alternatives and triggers. **Do not repeat stock attribution or company deep dives.**
-
-### Mid-Market Review — unscheduled
-
-Required topic keys: `intraday-direction`, `bull-bear-evidence`, `news-attribution`, `stocks-indices`, `conditional-triggers`. Include intraday direction, both bull/bear evidence, news contributors/detractors, stock/index observations and conditional triggers. Keep verified point attribution separate from price moves. This is not a fourth scheduled automation.
+Both publications require 3M/6M/12M conditional scenarios on open sessions. Where evidence is insufficient, record the scenario with `status: "unavailable"` and `confidence: "unavailable"` and explain why — never invent scenarios, targets or data.
 
 ## Phone-friendly manual publishing
 
@@ -123,4 +121,4 @@ After connecting GitHub in ChatGPT, verify **both** repository file-write suppor
 
 ## Static routes and SEO
 
-`/markets`, the four latest report URLs, `/markets/archive` and each `/markets/archive/<date>/<type>` get page-specific metadata and canonical URLs at vivekvishal.com. New report filenames generate prerender paths; the same validated files feed the archive and sitemap. Each known path is served as its own static HTML, with client navigation thereafter. Unknown URLs receive the existing `404.html`; no hash-router rewrite is needed. Invalid files fail validation. Actual production build output is verified by the platform/GitHub build, not by a runtime backend.
+`/markets`, `/markets/opening-brief`, `/markets/market-review`, `/markets/archive` and each `/markets/archive/<date>/<type>` get page-specific metadata and canonical URLs at vivekvishal.com. New report filenames generate prerender paths; the same validated files feed the archive and sitemap. Each known path is served as its own static HTML, with client navigation thereafter. Unknown URLs receive the existing `404.html`; no hash-router rewrite is needed. Invalid files fail validation. Actual production build output is verified by the platform/GitHub build, not by a runtime backend.
