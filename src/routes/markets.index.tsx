@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { ACTIVE_PUBLISHABLE_TYPES, HUB_NAME, REPORT_META } from "@/lib/markets/schema";
 import { formatIST, latestByType } from "@/lib/markets/reports";
 import { marketsHead } from "@/lib/markets/head";
+import { RecentReports } from "@/components/markets/RecentReports";
 
 export const Route = createFileRoute("/markets/")({
   head: () =>
@@ -48,6 +49,8 @@ function MarketsOverview() {
           );
         })}
       </ul>
+
+      <RecentReports />
 
       <p className="mt-10 text-xs leading-relaxed text-muted-foreground">
         Reports are prepared with AI assistance from public sources and published as written. They are research notes, not investment advice.
