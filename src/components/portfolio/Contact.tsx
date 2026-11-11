@@ -91,7 +91,7 @@ export function Contact() {
             </div>
             <div>
               <p className="text-xs uppercase tracking-widest text-muted-foreground">Location</p>
-              <p className="text-sm font-medium">Nagpur, India</p>
+              <p className="text-sm font-medium">India</p>
             </div>
           </div>
         </div>

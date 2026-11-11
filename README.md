@@ -46,7 +46,7 @@ Vivek Vishal
 
 
 
-MBA (Finance) | Assistant Manager at DSP Asset Managers | Finance Professional | Aspiring Civil Servant
+MBA (Finance) | Deputy Manager at Mahindra Manulife Mutual Fund
 
 
 
@@ -130,7 +130,9 @@ Display timeline cards for:
 
 
 
-Assistant Manager DSP Asset Managers
+Deputy Manager, Mahindra Manulife Mutual Fund — full-time, Oct 2026–Present
+
+DSP Mutual Fund — full-time, Jun 2024–Oct 2026: Management Trainee, Jun 2024–Jun 2025; Assistant Manager, Jun 2025–Oct 2026
 
 
 
@@ -304,7 +306,7 @@ LinkedIn
 
 
 
-Location: Nagpur, India
+Location: India
 
 
 

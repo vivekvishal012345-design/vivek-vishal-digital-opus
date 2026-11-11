@@ -67,7 +67,7 @@ export function Footer() {
           </div>
         </div>
         <div className="mt-10 flex flex-col items-start justify-between gap-4 border-t border-border pt-6 text-xs text-muted-foreground sm:flex-row sm:items-center">
-          <p>© {new Date().getFullYear()} Vivek Vishal. Nagpur, India.</p>
+          <p>© {new Date().getFullYear()} Vivek Vishal.</p>
           <div className="flex items-center gap-2">
             <a
               href={`mailto:${EMAIL}`}

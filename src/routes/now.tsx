@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 const items = [
   {
     label: "Work",
-    body: "Distributor and advisor engagement across the region for DSP Mutual Fund — product conversations, fund updates, and business development.",
+    body: "Deputy Manager at Mahindra Manulife Mutual Fund, full-time, Oct 2026–Present.",
   },
   {
     label: "Reading",

@@ -12,7 +12,7 @@ export const Route = createFileRoute("/work")({
       {
         name: "description",
         content:
-          "Professional work of Vivek Vishal — Assistant Manager at DSP Mutual Fund, education from Sarala Birla University and Ranchi University, NISM certification, and areas of focus.",
+          "Professional work of Vivek Vishal — Deputy Manager at Mahindra Manulife Mutual Fund, previously Management Trainee and Assistant Manager at DSP Mutual Fund, education, NISM certification, and areas of focus.",
       },
       { property: "og:title", content: "Work — Vivek Vishal" },
       {

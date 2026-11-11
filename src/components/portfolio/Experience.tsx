@@ -1,24 +1,33 @@
 import { Section } from "./Section";
 import { motion } from "framer-motion";
 
-const items = [
+export const experienceItems = [
+  {
+    role: "Deputy Manager",
+    company: "Mahindra Manulife Mutual Fund",
+    period: "Oct 2026–Present",
+    employmentType: "Full-time",
+    points: [],
+  },
   {
     role: "Assistant Manager",
     company: "DSP Mutual Fund",
-    period: "Present",
-    location: "Nagpur, India",
-    points: [
-      "Manage distributor and advisor relationships across the region.",
-      "Position equity and debt mutual fund products through fund updates and category-level conversations.",
-      "Identify growth opportunities within the existing partner network and onboard new distributors.",
-      "Support partners on servicing queries and day-to-day operational issues.",
-    ],
+    period: "Jun 2025–Oct 2026",
+    employmentType: "Full-time",
+    points: [],
+  },
+  {
+    role: "Management Trainee",
+    company: "DSP Mutual Fund",
+    period: "Jun 2024–Jun 2025",
+    employmentType: "Full-time",
+    points: [],
   },
   {
     role: "Finance Intern",
     company: "Central Coalfields Limited",
     period: "Summer Internship",
-    location: "Ranchi, India",
+    employmentType: "",
     points: [
       "Reviewed the cost structure across key operational heads.",
       "Worked on budget vs. actual variance analysis across departments.",
@@ -38,7 +47,7 @@ export function Experience() {
       <div className="relative">
         <div className="absolute left-4 top-2 bottom-2 w-px bg-border sm:left-6" aria-hidden />
         <div className="space-y-6">
-          {items.map((it, i) => (
+          {experienceItems.map((it, i) => (
             <motion.article
               key={it.role}
               initial={{ opacity: 0, x: -16 }}
@@ -55,17 +64,17 @@ export function Experience() {
                     <p className="text-sm text-[color:var(--royal)]">{it.company}</p>
                   </div>
                   <div className="text-xs text-muted-foreground">
-                    {it.period} · {it.location}
+                    {it.period}{it.employmentType ? ` · ${it.employmentType}` : ""}
                   </div>
                 </div>
-                <ul className="mt-4 space-y-2">
+                {it.points.length > 0 && <ul className="mt-4 space-y-2">
                   {it.points.map((p) => (
                     <li key={p} className="flex gap-3 text-sm text-muted-foreground">
                       <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-[color:var(--royal)]" />
                       {p}
                     </li>
                   ))}
-                </ul>
+                </ul>}
               </div>
             </motion.article>
           ))}

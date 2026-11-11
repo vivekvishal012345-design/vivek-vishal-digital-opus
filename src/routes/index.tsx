@@ -53,13 +53,13 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "The personal site of Vivek Vishal — MBA (Finance), Assistant Manager at DSP Mutual Fund. Writing, work, library, photography, and projects, kept in one place.",
+          "The personal site of Vivek Vishal — MBA (Finance), Deputy Manager at Mahindra Manulife Mutual Fund. Writing, work, library, photography, and projects, kept in one place.",
       },
       { property: "og:title", content: "Vivek Vishal" },
       {
         property: "og:description",
         content:
-          "A personal site for writing, work, library, photography, and projects — from Vivek Vishal, based in Nagpur, India.",
+          "A personal site for writing, work, library, photography, and projects — from Vivek Vishal.",
       },
       { property: "og:type", content: "website" },
       { property: "og:url", content: "https://vivekvishal.com/" },
@@ -79,9 +79,8 @@ export const Route = createFileRoute("/")({
           "@context": "https://schema.org",
           "@type": "Person",
           name: "Vivek Vishal",
-          jobTitle: "Assistant Manager",
-          worksFor: { "@type": "Organization", name: "DSP Mutual Fund" },
-          address: { "@type": "PostalAddress", addressLocality: "Nagpur", addressCountry: "IN" },
+          jobTitle: "Deputy Manager",
+          worksFor: { "@type": "Organization", name: "Mahindra Manulife Mutual Fund" },
           email: "hello@vivekvishal.com",
           url: "https://vivekvishal.com/",
           alumniOf: [
@@ -154,10 +153,10 @@ function Home() {
           >
             <span>MBA (Finance)</span>
             <span className="h-1 w-1 rounded-full bg-border" />
-            <span>Assistant Manager, DSP Mutual Fund</span>
+            <span>Deputy Manager, Mahindra Manulife Mutual Fund</span>
             <span className="h-1 w-1 rounded-full bg-border" />
             <span className="inline-flex items-center gap-1.5">
-              <MapPin className="h-3.5 w-3.5" /> Nagpur, India
+              <MapPin className="h-3.5 w-3.5" /> India
             </span>
           </motion.div>
         </div>
@@ -171,8 +170,7 @@ function Home() {
               Currently
             </span>
             <p className="max-w-2xl text-base leading-relaxed text-foreground/85">
-              Working with distributors and advisors for DSP Mutual Fund out of Nagpur, and
-              starting the first pieces of writing for this site.{" "}
+              Deputy Manager at Mahindra Manulife Mutual Fund, full-time, Oct 2026–Present.{" "}
               <Link to="/now" className="text-foreground underline decoration-border underline-offset-4 transition-colors hover:text-[color:var(--royal)] hover:decoration-[color:var(--royal)]">
                 More on the Now page
               </Link>

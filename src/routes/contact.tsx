@@ -10,7 +10,7 @@ export const Route = createFileRoute("/contact")({
       {
         name: "description",
         content:
-          "Get in touch with Vivek Vishal — for introductions, referrals, or a conversation about mutual funds and markets. Based in Nagpur, India.",
+          "Get in touch with Vivek Vishal — for introductions, referrals, or a conversation about mutual funds and markets.",
       },
       { property: "og:title", content: "Contact — Vivek Vishal" },
       {
