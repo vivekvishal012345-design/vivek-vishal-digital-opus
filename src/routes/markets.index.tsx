@@ -30,7 +30,7 @@ function MarketsOverview() {
           const latest = latestByType(t);
           const body = (
             <>
-              <span className="tabular text-xs uppercase tracking-[0.14em] text-muted-foreground">{meta.schedule}</span>
+              <span className="tabular text-xs uppercase tracking-[0.14em] text-muted-foreground"><span className={t === "opening-brief" ? "text-[color:var(--royal)]" : "text-foreground/70"}>{t === "opening-brief" ? "Morning" : "Evening"}</span><span className="block">{meta.schedule}</span></span>
               <span>
                 <span className="font-display text-xl text-foreground transition-colors group-hover:text-[color:var(--royal)]">{meta.title}</span>
                 <span className="mt-1 block text-sm leading-relaxed text-muted-foreground">{meta.blurb}</span>
@@ -41,9 +41,13 @@ function MarketsOverview() {
               </span>
             </>
           );
-          const cls = "group grid gap-2 py-6 sm:grid-cols-[9rem_1fr] sm:gap-6";
+          const morning = t === "opening-brief";
+          const cls = "group grid gap-2 py-6 pl-5 pr-4 sm:grid-cols-[9rem_1fr] sm:gap-6";
           return (
-            <li key={t} className="border-b border-border">
+            <li
+              key={t}
+              className={`border-b border-l-2 border-b-border ${morning ? "border-l-[color:var(--royal)]" : "border-l-foreground/30 bg-muted/20"}`}
+            >
               <Link to={t === "opening-brief" ? "/markets/opening-brief" : "/markets/market-review"} className={cls}>{body}</Link>
             </li>
           );
